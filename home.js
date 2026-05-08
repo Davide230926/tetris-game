@@ -371,16 +371,21 @@
     tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
 
     const submitText = submitBtn.querySelector('.btn-gold-text') || submitBtn;
+    const labelUsername = document.getElementById('label-username');
     if (tab === 'signup') {
       emailWrap.style.display = 'flex';
       submitText.textContent  = 'CREATE ACCOUNT';
       switchBtn.textContent   = 'Log in instead';
       modalAlt.childNodes[0].textContent = 'Already have an account? ';
+      if (labelUsername) labelUsername.textContent = 'USERNAME';
+      document.getElementById('field-username').placeholder = 'your_username';
     } else {
       emailWrap.style.display = 'none';
       submitText.textContent  = 'LOG IN';
       switchBtn.textContent   = 'Sign up free';
       modalAlt.childNodes[0].textContent = 'No account? ';
+      if (labelUsername) labelUsername.textContent = 'USERNAME OR EMAIL';
+      document.getElementById('field-username').placeholder = 'username or email';
     }
 
     modalError.textContent = '';
@@ -441,9 +446,11 @@
       const users = getUsers();
 
       if (currentTab === 'login') {
-        const match = users.find(u => u.username === username && u.password === password);
+        const match = users.find(u =>
+          (u.username === username || u.email === username) && u.password === password
+        );
         if (!match) {
-          setError('Invalid username or password.');
+          setError('Invalid username/email or password.');
           return;
         }
         localStorage.setItem('blokfall_user', JSON.stringify({ username: match.username }));
@@ -453,13 +460,19 @@
         // Signup
         if (!email) { setError('Email is required.'); return; }
 
-        const exists = users.find(u => u.username === username);
-        if (exists) {
+        const usernameTaken = users.find(u => u.username === username);
+        if (usernameTaken) {
           setError('That username is already taken.');
           return;
         }
 
-        const newUser = { username, password, email };
+        const emailTaken = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+        if (emailTaken) {
+          setError('An account with that email already exists.');
+          return;
+        }
+
+        const newUser = { username, password, email: email.toLowerCase() };
         users.push(newUser);
         saveUsers(users);
 
