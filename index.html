@@ -2,14 +2,30 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
   <meta name="theme-color" content="#02020a" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>TETRIS // NEON</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <canvas id="bg"></canvas>
+
+  <!-- Mobile top bar (hidden on desktop) -->
+  <div id="mobile-topbar">
+    <div id="mobile-stats">
+      <div class="ms-item"><div class="ms-label">SCORE</div><div class="ms-value" id="m-score">0</div></div>
+      <div class="ms-item"><div class="ms-label">BEST</div><div class="ms-value" id="m-best">0</div></div>
+      <div class="ms-item"><div class="ms-label">LEVEL</div><div class="ms-value" id="m-level">1</div></div>
+      <div class="ms-item"><div class="ms-label">LINES</div><div class="ms-value" id="m-lines">0</div></div>
+    </div>
+    <div id="mobile-actions">
+      <button class="mac-btn" id="mac-restart">↺</button>
+      <button class="mac-btn" id="mac-pause">❚❚</button>
+      <button class="mac-btn" id="mac-mute">🔊</button>
+    </div>
+  </div>
 
   <div id="wrapper">
 
@@ -79,16 +95,47 @@
 
   </div>
 
+  <!-- Mobile controls bar (shown only on small screens) -->
   <div id="mobile-controls">
-    <div class="mc-row">
-      <button class="mc-btn" id="mc-hold" aria-label="Hold"><span>⬛</span><small>HOLD</small></button>
-      <button class="mc-btn mc-wide" id="mc-up" aria-label="Rotate"><span>↻</span><small>ROTATE</small></button>
-      <button class="mc-btn" id="mc-harddrop" aria-label="Hard Drop"><span>⬇</span><small>DROP</small></button>
+    <div class="mc-top-row">
+      <div class="mc-preview-wrap">
+        <div class="mc-preview-label">HOLD</div>
+        <canvas id="mc-hold-canvas" width="60" height="60"></canvas>
+      </div>
+      <div class="mc-center-btns">
+        <button class="mc-btn mc-action" id="mc-hold" aria-label="Hold">
+          <span class="mc-icon">C</span>
+          <span class="mc-lbl">HOLD</span>
+        </button>
+        <button class="mc-btn mc-action mc-harddrop" id="mc-harddrop" aria-label="Hard Drop">
+          <span class="mc-icon">⬇︎</span>
+          <span class="mc-lbl">DROP</span>
+        </button>
+      </div>
+      <div class="mc-preview-wrap">
+        <div class="mc-preview-label">NEXT</div>
+        <canvas id="mc-next-canvas" width="60" height="60"></canvas>
+      </div>
     </div>
-    <div class="mc-row">
-      <button class="mc-btn mc-big" id="mc-left" aria-label="Move Left"><span>◀</span></button>
-      <button class="mc-btn mc-big" id="mc-down" aria-label="Soft Drop"><span>▼</span></button>
-      <button class="mc-btn mc-big" id="mc-right" aria-label="Move Right"><span>▶</span></button>
+    <div class="mc-dpad">
+      <div class="mc-dpad-row">
+        <div class="mc-dpad-empty"></div>
+        <button class="mc-btn mc-dir" id="mc-up" aria-label="Rotate">
+          <span class="mc-icon">↻</span>
+        </button>
+        <div class="mc-dpad-empty"></div>
+      </div>
+      <div class="mc-dpad-row">
+        <button class="mc-btn mc-dir" id="mc-left" aria-label="Left">
+          <span class="mc-icon">◀</span>
+        </button>
+        <button class="mc-btn mc-dir mc-soft" id="mc-down" aria-label="Soft Drop">
+          <span class="mc-icon">▼</span>
+        </button>
+        <button class="mc-btn mc-dir" id="mc-right" aria-label="Right">
+          <span class="mc-icon">▶</span>
+        </button>
+      </div>
     </div>
   </div>
 
