@@ -722,6 +722,51 @@ section { position: relative; }
 }
 
 /* ============================================================
+   ABOUT
+   ============================================================ */
+
+#about {
+  padding: 120px 80px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.about-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+
+.about-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  margin-top: 48px;
+}
+
+.about-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.about-col p {
+  font-size: 1rem;
+  color: var(--text-2);
+  line-height: 1.8;
+}
+
+.about-col strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .about-cols { grid-template-columns: 1fr; }
+  #about { padding-left: 48px; padding-right: 48px; }
+}
+
+/* ============================================================
    CTA
    ============================================================ */
 
