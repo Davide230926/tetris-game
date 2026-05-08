@@ -522,7 +522,7 @@ section { position: relative; z-index: 3; }
   opacity: 0.7;
 }
 .preview-id::before {
-  content: '◆';
+  content: '\25C6';
   margin-right: 6px;
   font-family: system-ui, sans-serif;
   color: var(--gold);
@@ -1017,7 +1017,7 @@ section { position: relative; z-index: 3; }
   position: relative;
 }
 #about::before {
-  content: '◆';
+  content: '\25C6';
   position: absolute;
   top: 60px; left: 50%;
   transform: translateX(-50%);
