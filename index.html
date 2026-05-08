@@ -3,324 +3,260 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BLOKFALL — STACK · CLEAR · SURVIVE</title>
+  <title>BLOKFALL &mdash; Stack. Clear. Survive.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,700;0,900;1,700;1,900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Barlow+Condensed:ital,wght@0,700;0,900;1,900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="home.css" />
 </head>
 <body>
-  <canvas id="bg-canvas"></canvas>
-
-  <!-- Custom cursor follower -->
-  <div id="cursor-glow"></div>
 
   <!-- NAV -->
   <nav id="nav">
     <a href="#" class="nav-logo">BLOK<span>FALL</span></a>
     <div class="nav-links">
-      <a href="#features">FEATURES</a>
-      <a href="#howto">HOW TO PLAY</a>
-      <a href="#leaderboard">RANKINGS</a>
-      <a href="#about">ABOUT</a>
+      <a href="#features">Features</a>
+      <a href="#howto">How to Play</a>
+      <a href="#leaderboard">Rankings</a>
     </div>
-    <button class="nav-cta" id="btn-login-nav">
-      <span>LOG IN</span>
-      <span class="nav-cta-arrow">&rarr;</span>
-    </button>
+    <div class="nav-right">
+      <button class="nav-login" id="btn-login-nav">Log in</button>
+      <button class="nav-play" id="btn-play-nav">Play Free</button>
+    </div>
   </nav>
-
-  <!-- Vertical edge type -->
-  <div class="edge-type edge-left">EST · MMXXV · NEON EDITION</div>
-  <div class="edge-type edge-right">A BROWSER ARCADE EXPERIENCE</div>
 
   <!-- HERO -->
   <section id="hero">
-    <div class="hero-grid-bg"></div>
-    <div class="hero-bigtype" aria-hidden="true">BLOKFALL</div>
-
-    <div class="hero-content">
-      <div class="hero-eyebrow">
-        <span class="hero-eyebrow-dot"></span>
-        <span>NEON EDITION · 2025</span>
-        <span class="hero-eyebrow-divider"></span>
-        <span>VERSION 1.0</span>
+    <div class="hero-left">
+      <div class="hero-tag">
+        <span class="hero-tag-dot"></span>
+        <span>Browser Arcade &bull; 2025</span>
       </div>
-      <h1 class="hero-title">
-        <span class="hero-t1">THE CLASSIC</span>
-        <span class="hero-t2">REIN<em>vented</em></span>
-      </h1>
-      <p class="hero-sub">Stack. Clear. Survive. The original block puzzle — rebuilt from scratch with a premium audio-visual experience designed for the modern browser.</p>
+      <h1 class="hero-heading">The classic<br><em>reinvented.</em></h1>
+      <p class="hero-body">Stack. Clear. Survive. The original block puzzle rebuilt with a premium audio-visual experience — free, forever, in your browser.</p>
       <div class="hero-actions">
-        <button class="btn-gold" id="btn-play-hero">
-          <span class="btn-gold-text">PLAY NOW</span>
-          <span class="btn-gold-arrow">&rarr;</span>
-        </button>
-        <button class="btn-ghost-gold" id="btn-login-hero">CREATE ACCOUNT</button>
+        <button class="btn-primary" id="btn-play-hero">Play Now</button>
+        <button class="btn-secondary" id="btn-login-hero">Create Account</button>
       </div>
-      <div class="hero-stats">
-        <div class="hstat"><span class="hstat-num">20</span><span class="hstat-lbl">LEVELS</span></div>
-        <div class="hstat-div"></div>
-        <div class="hstat"><span class="hstat-num">7</span><span class="hstat-lbl">PIECES</span></div>
-        <div class="hstat-div"></div>
-        <div class="hstat"><span class="hstat-num">&infin;</span><span class="hstat-lbl">REPLAYABLE</span></div>
-        <div class="hstat-div"></div>
-        <div class="hstat"><span class="hstat-num">0</span><span class="hstat-lbl">ADS</span></div>
+      <div class="hero-pills">
+        <span class="pill">20 Levels</span>
+        <span class="pill">7 Pieces</span>
+        <span class="pill">SRS Rotation</span>
+        <span class="pill">No Ads</span>
       </div>
     </div>
-
-    <div class="hero-visual">
-      <div class="tetris-preview">
-        <div class="preview-id">UNIT_01 · ACTIVE</div>
+    <div class="hero-right">
+      <div class="preview-frame">
+        <div class="preview-label">LIVE PREVIEW</div>
         <canvas id="preview-canvas" width="200" height="400"></canvas>
-        <div class="preview-glow"></div>
-        <div class="preview-scanlines"></div>
+        <div class="preview-overlay"></div>
       </div>
-    </div>
-
-    <!-- Scroll cue -->
-    <div class="scroll-cue">
-      <span>SCROLL</span>
-      <div class="scroll-cue-line"></div>
     </div>
   </section>
 
-  <!-- MARQUEE -->
-  <div class="marquee">
-    <div class="marquee-track">
-      <span>STACK · CLEAR · SURVIVE</span>
-      <span class="marquee-dot">&#9670;</span>
-      <span>STACK · CLEAR · SURVIVE</span>
-      <span class="marquee-dot">&#9670;</span>
-      <span>STACK · CLEAR · SURVIVE</span>
-      <span class="marquee-dot">&#9670;</span>
-      <span>STACK · CLEAR · SURVIVE</span>
-      <span class="marquee-dot">&#9670;</span>
-      <span>STACK · CLEAR · SURVIVE</span>
-      <span class="marquee-dot">&#9670;</span>
-      <span>STACK · CLEAR · SURVIVE</span>
-      <span class="marquee-dot">&#9670;</span>
+  <!-- TICKER -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span>STACK</span><span class="ticker-sep">+</span>
+      <span>CLEAR</span><span class="ticker-sep">+</span>
+      <span>SURVIVE</span><span class="ticker-sep">+</span>
+      <span>ROTATE</span><span class="ticker-sep">+</span>
+      <span>DROP</span><span class="ticker-sep">+</span>
+      <span>SCORE</span><span class="ticker-sep">+</span>
+      <span>STACK</span><span class="ticker-sep">+</span>
+      <span>CLEAR</span><span class="ticker-sep">+</span>
+      <span>SURVIVE</span><span class="ticker-sep">+</span>
+      <span>ROTATE</span><span class="ticker-sep">+</span>
+      <span>DROP</span><span class="ticker-sep">+</span>
+      <span>SCORE</span><span class="ticker-sep">+</span>
     </div>
   </div>
 
-  <!-- FEATURES -->
+  <!-- FEATURES BENTO -->
   <section id="features" data-reveal>
-    <div class="features-head">
-      <div class="section-eyebrow">
-        <span class="section-eyebrow-num">/01</span>
-        <span>WHAT SETS IT APART</span>
-      </div>
-      <h2 class="section-title">BUILT<br><em>different.</em></h2>
+    <div class="section-header">
+      <div class="section-label">01 &mdash; Features</div>
+      <h2 class="section-heading">Built <em>different.</em></h2>
     </div>
-    <div class="features-grid">
-      <div class="feat-card" style="--i:0">
-        <div class="feat-num">01</div>
-        <div class="feat-icon">&#9672;</div>
-        <div class="feat-title">SRS<br>ROTATION</div>
-        <div class="feat-body">Full Super Rotation System with wall kicks — exactly like guideline Tetris. No shortcuts, no compromises.</div>
-        <div class="feat-corner"></div>
+    <div class="bento">
+      <div class="bento-card bento-wide" style="--i:0">
+        <div class="bento-num">01</div>
+        <div class="bento-title">SRS Rotation</div>
+        <div class="bento-body">Full Super Rotation System with wall kicks &mdash; exactly like guideline Tetris. No shortcuts, no compromises.</div>
+        <div class="bento-accent"></div>
       </div>
-      <div class="feat-card" style="--i:1">
-        <div class="feat-num">02</div>
-        <div class="feat-icon">&#9836;</div>
-        <div class="feat-title">LIVE AUDIO<br>ENGINE</div>
-        <div class="feat-body">Synthesized Korobeiniki rendered in real-time via Web Audio API. No MP3 files — pure sound design.</div>
-        <div class="feat-corner"></div>
+      <div class="bento-card" style="--i:1">
+        <div class="bento-num">02</div>
+        <div class="bento-title">Live Audio Engine</div>
+        <div class="bento-body">Korobeiniki synthesized in real-time via Web Audio API. No MP3s &mdash; pure sound design.</div>
+        <div class="bento-accent"></div>
       </div>
-      <div class="feat-card" style="--i:2">
-        <div class="feat-icon">&#9673;</div>
-        <div class="feat-num">03</div>
-        <div class="feat-title">GHOST<br>PIECE</div>
-        <div class="feat-body">Ghost piece projection and 7-bag randomizer for fair, strategic play every single session.</div>
-        <div class="feat-corner"></div>
+      <div class="bento-card" style="--i:2">
+        <div class="bento-num">03</div>
+        <div class="bento-title">Ghost Piece</div>
+        <div class="bento-body">Ghost projection and 7-bag randomizer for fair, strategic play every session.</div>
+        <div class="bento-accent"></div>
       </div>
-      <div class="feat-card" style="--i:3">
-        <div class="feat-num">04</div>
-        <div class="feat-icon">&#11041;</div>
-        <div class="feat-title">PARTICLE<br>FX</div>
-        <div class="feat-body">Line clears trigger particle explosions, screen shake, and full-screen flash effects.</div>
-        <div class="feat-corner"></div>
+      <div class="bento-card bento-wide" style="--i:3">
+        <div class="bento-num">04</div>
+        <div class="bento-title">Particle FX</div>
+        <div class="bento-body">Line clears trigger particle explosions, screen shake, and full-screen flash effects that make every clear feel earned.</div>
+        <div class="bento-accent"></div>
       </div>
     </div>
   </section>
 
   <!-- HOW TO PLAY -->
   <section id="howto" data-reveal>
-    <div class="howto-head">
-      <div class="section-eyebrow">
-        <span class="section-eyebrow-num">/02</span>
-        <span>THE BASICS</span>
-      </div>
-      <h2 class="section-title">HOW TO<br><em>play.</em></h2>
+    <div class="section-header">
+      <div class="section-label">02 &mdash; Controls</div>
+      <h2 class="section-heading">How to <em>play.</em></h2>
     </div>
-    <div class="howto-grid">
-      <div class="howto-card" style="--i:0">
-        <div class="howto-keys">
-          <span class="kbd">L</span><span class="kbd">R</span>
+    <div class="controls-grid">
+      <div class="ctrl-row" style="--i:0">
+        <div class="ctrl-keys"><span class="kbd">L</span><span class="kbd">R</span></div>
+        <div class="ctrl-info">
+          <div class="ctrl-name">Move</div>
+          <div class="ctrl-desc">Slide the piece left or right</div>
         </div>
-        <div class="howto-label">MOVE</div>
-        <div class="howto-desc">Slide pieces horizontally across the field.</div>
       </div>
-      <div class="howto-card" style="--i:1">
-        <div class="howto-keys">
-          <span class="kbd">UP</span>
+      <div class="ctrl-row" style="--i:1">
+        <div class="ctrl-keys"><span class="kbd">UP</span></div>
+        <div class="ctrl-info">
+          <div class="ctrl-name">Rotate</div>
+          <div class="ctrl-desc">Spin clockwise with wall kicks</div>
         </div>
-        <div class="howto-label">ROTATE</div>
-        <div class="howto-desc">Spin pieces clockwise. Wall-kicks included.</div>
       </div>
-      <div class="howto-card" style="--i:2">
-        <div class="howto-keys">
-          <span class="kbd">DN</span>
+      <div class="ctrl-row" style="--i:2">
+        <div class="ctrl-keys"><span class="kbd">DN</span></div>
+        <div class="ctrl-info">
+          <div class="ctrl-name">Soft Drop</div>
+          <div class="ctrl-desc">Speed up the fall, earn bonus points</div>
         </div>
-        <div class="howto-label">SOFT DROP</div>
-        <div class="howto-desc">Speed up the fall and earn extra points.</div>
       </div>
-      <div class="howto-card" style="--i:3">
-        <div class="howto-keys">
-          <span class="kbd kbd-wide">SPACE</span>
+      <div class="ctrl-row" style="--i:3">
+        <div class="ctrl-keys"><span class="kbd kbd-wide">SPACE</span></div>
+        <div class="ctrl-info">
+          <div class="ctrl-name">Hard Drop</div>
+          <div class="ctrl-desc">Slam the piece down instantly</div>
         </div>
-        <div class="howto-label">HARD DROP</div>
-        <div class="howto-desc">Slam the piece down — instant lock.</div>
+      </div>
+      <div class="ctrl-row" style="--i:4">
+        <div class="ctrl-keys"><span class="kbd">P</span></div>
+        <div class="ctrl-info">
+          <div class="ctrl-name">Pause</div>
+          <div class="ctrl-desc">Take a breather</div>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- LEADERBOARD -->
   <section id="leaderboard" data-reveal>
-    <div class="lb-left">
-      <div class="section-eyebrow">
-        <span class="section-eyebrow-num">/03</span>
-        <span>GLOBAL RANKINGS</span>
+    <div class="lb-wrap">
+      <div class="lb-left">
+        <div class="section-label">03 &mdash; Rankings</div>
+        <h2 class="section-heading">Top<br><em>players.</em></h2>
+        <p class="lb-copy">Create an account to save your scores and climb the global leaderboard. The top spot is waiting.</p>
+        <button class="btn-primary" id="btn-login-lb">Join the Ranks</button>
       </div>
-      <h2 class="section-title">TOP<br><em>players.</em></h2>
-      <p class="lb-desc">Create an account to save your scores and compete on the global leaderboard. The top spot is yours to take.</p>
-      <button class="btn-gold" id="btn-login-lb">
-        <span class="btn-gold-text">JOIN THE RANKS</span>
-        <span class="btn-gold-arrow">&rarr;</span>
-      </button>
-    </div>
-    <div class="lb-right">
-      <div class="lb-table">
-        <div class="lb-header">
-          <span>RANK</span><span>PLAYER</span><span>SCORE</span><span>LV</span>
-        </div>
-        <div class="lb-row gold-row" style="--i:0">
-          <span class="lb-rank">01</span>
-          <span class="lb-name">PHANTOM_X</span>
-          <span class="lb-score">284,400</span>
-          <span class="lb-level">18</span>
-        </div>
-        <div class="lb-row" style="--i:1">
-          <span class="lb-rank">02</span>
-          <span class="lb-name">GRIDLCK</span>
-          <span class="lb-score">231,800</span>
-          <span class="lb-level">16</span>
-        </div>
-        <div class="lb-row" style="--i:2">
-          <span class="lb-rank">03</span>
-          <span class="lb-name">APEX_99</span>
-          <span class="lb-score">198,200</span>
-          <span class="lb-level">14</span>
-        </div>
-        <div class="lb-row" style="--i:3">
-          <span class="lb-rank">04</span>
-          <span class="lb-name">NOCTURNE</span>
-          <span class="lb-score">175,600</span>
-          <span class="lb-level">13</span>
-        </div>
-        <div class="lb-row" style="--i:4">
-          <span class="lb-rank">05</span>
-          <span class="lb-name">VOIDRUNNER</span>
-          <span class="lb-score">162,000</span>
-          <span class="lb-level">12</span>
-        </div>
-        <div class="lb-row lb-you" style="--i:5">
-          <span class="lb-rank">—</span>
-          <span class="lb-name">YOU?</span>
-          <span class="lb-score">???</span>
-          <span class="lb-level">—</span>
+      <div class="lb-right">
+        <div class="lb-table">
+          <div class="lb-head">
+            <span>Rank</span><span>Player</span><span>Score</span><span>Lv</span>
+          </div>
+          <div class="lb-row lb-gold" style="--i:0">
+            <span class="lb-rank">1</span>
+            <span class="lb-name">PHANTOM_X</span>
+            <span class="lb-score">284,400</span>
+            <span class="lb-lv">18</span>
+          </div>
+          <div class="lb-row" style="--i:1">
+            <span class="lb-rank">2</span>
+            <span class="lb-name">GRIDLCK</span>
+            <span class="lb-score">231,800</span>
+            <span class="lb-lv">16</span>
+          </div>
+          <div class="lb-row" style="--i:2">
+            <span class="lb-rank">3</span>
+            <span class="lb-name">APEX_99</span>
+            <span class="lb-score">198,200</span>
+            <span class="lb-lv">14</span>
+          </div>
+          <div class="lb-row" style="--i:3">
+            <span class="lb-rank">4</span>
+            <span class="lb-name">NOCTURNE</span>
+            <span class="lb-score">175,600</span>
+            <span class="lb-lv">13</span>
+          </div>
+          <div class="lb-row" style="--i:4">
+            <span class="lb-rank">5</span>
+            <span class="lb-name">VOIDRUNNER</span>
+            <span class="lb-score">162,000</span>
+            <span class="lb-lv">12</span>
+          </div>
+          <div class="lb-row lb-you" style="--i:5">
+            <span class="lb-rank">?</span>
+            <span class="lb-name">You?</span>
+            <span class="lb-score">---</span>
+            <span class="lb-lv">-</span>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ABOUT -->
-  <section id="about" data-reveal>
-    <div class="about-inner">
-      <div class="section-eyebrow centered">
-        <span class="section-eyebrow-num">/04</span>
-        <span>THE GAME</span>
-      </div>
-      <h2 class="section-title about-title">CLASSIC RULES.<br><em>modern soul.</em></h2>
-      <div class="about-cols">
-        <p>BLOKFALL is a faithful recreation of the classic block-stacking puzzle game, rebuilt with a focus on <strong>feel</strong>. Every animation, sound, and visual effect has been hand-crafted to make each line clear satisfying.</p>
-        <p>No ads. No microtransactions. No bloat. Just the game, running at full speed in your browser — <strong>free, forever</strong>.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA STRIP -->
-  <section id="cta-strip" data-reveal>
+  <!-- CTA -->
+  <section id="cta" data-reveal>
     <div class="cta-inner">
-      <h2 class="cta-title">READY TO <em>play?</em></h2>
-      <button class="btn-gold btn-gold-big" id="btn-play-cta">
-        <span class="btn-gold-text">START PLAYING</span>
-        <span class="btn-gold-arrow">&rarr;</span>
-      </button>
+      <div class="cta-text">
+        <p class="cta-label">Free to play &bull; No download &bull; No ads</p>
+        <h2 class="cta-heading">Ready to <em>play?</em></h2>
+      </div>
+      <button class="btn-primary btn-large" id="btn-play-cta">Start Playing</button>
     </div>
   </section>
 
   <!-- FOOTER -->
   <footer id="footer">
-    <div class="footer-top">
+    <div class="footer-inner">
       <div class="footer-logo">BLOK<span>FALL</span></div>
       <div class="footer-links">
-        <a href="#features">FEATURES</a>
-        <a href="#howto">CONTROLS</a>
-        <a href="#leaderboard">RANKINGS</a>
-        <a href="game.html">PLAY</a>
+        <a href="#features">Features</a>
+        <a href="#howto">Controls</a>
+        <a href="#leaderboard">Rankings</a>
+        <a href="game.html">Play</a>
       </div>
-    </div>
-    <div class="footer-divider"></div>
-    <div class="footer-bottom">
-      <div class="footer-sub">A browser arcade experience · Web Audio API · Canvas 2D</div>
-      <div class="footer-sub footer-sub-right">© 2025 · BUILT WITH OBSESSION</div>
+      <div class="footer-copy">&copy; 2025 &mdash; Built with obsession</div>
     </div>
   </footer>
 
   <!-- LOGIN MODAL -->
   <div id="modal-overlay">
     <div id="modal">
-      <button id="modal-close">✕</button>
-      <div class="modal-stripe"></div>
-      <div class="modal-eyebrow">ACCESS · TERMINAL</div>
+      <button id="modal-close" aria-label="Close">&times;</button>
       <div class="modal-logo">BLOK<span>FALL</span></div>
       <div id="modal-tabs">
-        <button class="modal-tab active" data-tab="login">LOG IN</button>
-        <button class="modal-tab" data-tab="signup">SIGN UP</button>
+        <button class="modal-tab active" data-tab="login">Log In</button>
+        <button class="modal-tab" data-tab="signup">Sign Up</button>
       </div>
       <form id="modal-form">
         <div class="form-field">
-          <label id="label-username">USERNAME OR EMAIL</label>
+          <label id="label-username">Username or Email</label>
           <input type="text" id="field-username" placeholder="username or email" autocomplete="off" />
         </div>
         <div class="form-field" id="field-email-wrap" style="display:none">
-          <label>EMAIL</label>
+          <label>Email</label>
           <input type="email" id="field-email" placeholder="you@example.com" />
         </div>
         <div class="form-field">
-          <label>PASSWORD</label>
-          <input type="password" id="field-password" placeholder="••••••••" />
+          <label>Password</label>
+          <input type="password" id="field-password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" />
         </div>
         <div id="modal-error"></div>
-        <button type="submit" class="btn-gold modal-submit" id="modal-submit-btn">
-          <span class="btn-gold-text">LOG IN</span>
-          <span class="btn-gold-arrow">&rarr;</span>
-        </button>
+        <button type="submit" class="btn-primary modal-submit" id="modal-submit-btn">Log In</button>
       </form>
-      <div class="modal-alt">
-        No account? <button class="modal-switch" id="modal-switch-btn">Sign up free</button>
-      </div>
+      <p class="modal-alt">No account? <button class="modal-switch" id="modal-switch-btn">Sign up free</button></p>
     </div>
   </div>
 
