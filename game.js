@@ -777,7 +777,7 @@ function setMuted(m) {
   muted=m;
   if (masterGain) masterGain.gain.value = muted ? 0 : 0.7;
   btnMute.classList.toggle('muted', muted);
-  btnMuteIc.textContent = muted ? '🔇' : '🔊';
+  btnMuteIc.textContent = muted ? 'OFF' : 'ON';
   btnMuteLbl.textContent = muted ? 'MUTED' : 'SOUND';
 }
 
@@ -906,10 +906,10 @@ function togglePause() {
 
 function setPauseButton(isPaused) {
   if (isPaused) {
-    btnPauseIc.textContent='▶';
+    btnPauseIc.textContent='>';
     btnPauseLbl.textContent='RESUME';
   } else {
-    btnPauseIc.textContent='❚❚';
+    btnPauseIc.textContent='II';
     btnPauseLbl.textContent='PAUSE';
   }
 }

@@ -196,6 +196,7 @@ body::after {
 }
 .nav-cta-arrow {
   font-size: 1rem;
+  font-family: system-ui, sans-serif;
   transition: transform 0.22s;
 }
 .nav-cta:hover .nav-cta-arrow {
@@ -243,6 +244,7 @@ body::after {
 .btn-gold-arrow {
   font-size: 1.2rem;
   font-weight: 400;
+  font-family: system-ui, sans-serif;
   transition: transform 0.22s;
 }
 .btn-gold:hover .btn-gold-arrow { transform: translateX(4px); }
