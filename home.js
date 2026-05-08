@@ -346,9 +346,9 @@
   if (playBtn) {
     playBtn.addEventListener('click', () => {
       if (localStorage.getItem('blokfall_user')) {
-        window.location.href = 'index.html';
+        window.location.href = 'game.html';
       } else {
-        window.location.href = 'index.html';
+        window.location.href = 'game.html';
       }
     });
   }
@@ -450,7 +450,7 @@
           return;
         }
         localStorage.setItem('blokfall_user', JSON.stringify({ username: match.username }));
-        window.location.href = 'index.html';
+        window.location.href = 'game.html';
 
       } else {
         // Signup
@@ -467,7 +467,7 @@
         saveUsers(users);
 
         localStorage.setItem('blokfall_user', JSON.stringify({ username }));
-        window.location.href = 'index.html';
+        window.location.href = 'game.html';
       }
     });
   }

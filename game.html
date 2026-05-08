@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#080810" />
+  <title>BLOKFALL — PLAY</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,700;0,900;1,700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <canvas id="bg"></canvas>
+  <div class="scanlines"></div>
+
+  <!-- Game nav -->
+  <header id="game-nav">
+    <a class="game-logo" href="index.html">BLOK<span>FALL</span></a>
+    <div id="game-user-info">
+      <span id="game-username"></span>
+      <button class="gnav-btn" id="btn-logout">LOG OUT</button>
+    </div>
+  </header>
+
+  <div id="wrapper">
+
+    <!-- LEFT PANEL -->
+    <div id="left-panel">
+      <div class="panel-box anim-in" style="--delay:0.05s">
+        <div class="panel-label">SCORE</div>
+        <div class="panel-value" id="score">0</div>
+      </div>
+      <div class="panel-box anim-in" style="--delay:0.12s">
+        <div class="panel-label">BEST</div>
+        <div class="panel-value" id="highscore">0</div>
+      </div>
+      <div class="panel-box anim-in" style="--delay:0.19s">
+        <div class="panel-label">LEVEL</div>
+        <div class="panel-value" id="level">1</div>
+      </div>
+      <div class="panel-box anim-in" style="--delay:0.26s">
+        <div class="panel-label">LINES</div>
+        <div class="panel-value" id="lines">0</div>
+      </div>
+
+      <div class="btn-stack anim-in" style="--delay:0.33s">
+        <button class="btn primary" id="btn-restart" type="button">
+          <span class="btn-icon">↺</span><span>RESTART</span>
+        </button>
+        <button class="btn" id="btn-pause" type="button">
+          <span class="btn-icon" id="btn-pause-icon">❚❚</span><span id="btn-pause-label">PAUSE</span>
+        </button>
+        <button class="btn ghost" id="btn-mute" type="button">
+          <span class="btn-icon" id="btn-mute-icon">🔊</span><span id="btn-mute-label">SOUND</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- CANVAS -->
+    <div id="canvas-wrap" class="anim-in" style="--delay:0.0s">
+      <div class="canvas-corner tl"></div>
+      <div class="canvas-corner tr"></div>
+      <div class="canvas-corner bl"></div>
+      <div class="canvas-corner br"></div>
+      <canvas id="canvas" width="360" height="720"></canvas>
+
+      <!-- OVERLAY -->
+      <div id="overlay" class="visible">
+        <div class="ov-scanlines"></div>
+        <div class="ov-grid"></div>
+        <div id="ov-state-wrap">
+          <div id="overlay-eyebrow">NEON EDITION</div>
+          <div id="overlay-title">BLOKFALL</div>
+          <div id="overlay-sub"></div>
+        </div>
+        <div id="ov-action-wrap">
+          <button class="btn primary big" id="btn-start" type="button">
+            <span class="btn-icon">▶</span><span>START GAME</span>
+          </button>
+          <div id="overlay-msg">OR PRESS ANY KEY</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div id="right-panel">
+      <div class="panel-box anim-in" style="--delay:0.05s">
+        <div class="panel-label">NEXT</div>
+        <canvas id="next-canvas" width="140" height="140"></canvas>
+      </div>
+      <div class="panel-box controls-box anim-in" style="--delay:0.12s">
+        <div class="panel-label">CONTROLS</div>
+        <div class="ctrl-line"><span class="key">← →</span><span>Move</span></div>
+        <div class="ctrl-line"><span class="key">↑</span><span>Rotate</span></div>
+        <div class="ctrl-line"><span class="key">↓</span><span>Soft drop</span></div>
+        <div class="ctrl-line"><span class="key">SPC</span><span>Hard drop</span></div>
+        <div class="ctrl-line"><span class="key">P</span><span>Pause</span></div>
+        <div class="ctrl-line"><span class="key">R</span><span>Restart</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>

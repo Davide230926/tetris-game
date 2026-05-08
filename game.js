@@ -17,7 +17,8 @@ const bgCanvas   = document.getElementById('bg');
 const bgCtx      = bgCanvas.getContext('2d');
 const nextCanvas = document.getElementById('next-canvas');
 const nextCtx    = nextCanvas.getContext('2d');
-const holdCanvas = document.getElementById('hold-canvas');
+// hold removed from UI — stub canvas so hold logic doesn't crash
+const holdCanvas = document.createElement('canvas');
 const holdCtx    = holdCanvas.getContext('2d');
 const scoreEl    = document.getElementById('score');
 const highEl     = document.getElementById('highscore');
@@ -25,9 +26,10 @@ const levelEl    = document.getElementById('level');
 const linesEl    = document.getElementById('lines');
 const overlay    = document.getElementById('overlay');
 const ovTitle    = document.getElementById('overlay-title');
+const ovEyebrow  = document.getElementById('overlay-eyebrow');
 const ovSub      = document.getElementById('overlay-sub');
 const ovMsg      = document.getElementById('overlay-msg');
-const holdBox    = document.getElementById('hold-box');
+const holdBox    = { classList: { add:()=>{}, remove:()=>{} } }; // stub
 const btnStart   = document.getElementById('btn-start');
 const btnRestart = document.getElementById('btn-restart');
 const btnPause   = document.getElementById('btn-pause');
@@ -46,7 +48,7 @@ toast.id = 'toast';
 document.body.appendChild(toast);
 
 // ─── Constants ────────────────────────────────────────────────────────────────
-const COLS = 10, ROWS = 20, CELL = 30;
+const COLS = 10, ROWS = 20, CELL = 36;
 const LOCK_DELAY = 500;
 const LINE_SCORES = [0, 100, 300, 500, 800];
 
@@ -441,14 +443,15 @@ function showToast(text) {
 }
 
 // ─── Overlay ──────────────────────────────────────────────────────────────────
-function showOverlay(title,sub,msg,cls='',showStartBtn=true) {
-  ovTitle.textContent=title;
-  ovSub.textContent=sub;
-  ovMsg.textContent=msg;
-  overlay.className='visible'+(cls?' '+cls:'');
+function showOverlay(title, sub, msg, cls='', showStartBtn=true) {
+  ovTitle.textContent = title;
+  if (ovEyebrow) ovEyebrow.textContent = cls === 'gameover' ? 'FINAL SCORE' : cls === 'paused' ? 'GAME PAUSED' : 'NEON EDITION';
+  ovSub.textContent = sub;
+  ovMsg.textContent = msg;
+  overlay.className = 'visible' + (cls ? ' ' + cls : '');
   btnStart.style.display = showStartBtn ? '' : 'none';
 }
-function hideOverlay() { overlay.className=''; }
+function hideOverlay() { overlay.className = ''; }
 
 // ─── Audio ────────────────────────────────────────────────────────────────────
 let audioCtx=null, masterGain=null, musicGain=null, sfxGain=null;
@@ -876,9 +879,9 @@ function doGameOver() {
       if(board[r]&&board[r][c])
         spawnParticles(c*CELL+CELL/2,r*CELL+CELL/2,board[r][c],8);
   setTimeout(()=>{
-    showOverlay('GAME OVER',`SCORE  ${score}`,'OR PRESS ANY KEY','gameover');
-    btnStart.querySelector('span:last-child').textContent='PLAY AGAIN';
-  },450);
+    showOverlay('GAME OVER', score.toLocaleString(), 'PRESS ANY KEY TO RETRY', 'gameover');
+    btnStart.querySelector('span:last-child').textContent = 'PLAY AGAIN';
+  }, 450);
 }
 
 function togglePause() {
@@ -886,7 +889,7 @@ function togglePause() {
   paused=!paused;
   if (paused) {
     stopMusic();
-    showOverlay('PAUSED','TAKE A BREATH','RESUME WITH P','paused', false);
+    showOverlay('PAUSED', 'TAKE A BREATH', 'PRESS P TO RESUME', 'paused', false);
     setPauseButton(true);
   } else {
     hideOverlay();
@@ -1032,8 +1035,7 @@ btnMute.addEventListener('click', ()=>{
   const logoutBtn  = document.getElementById('btn-logout');
 
   if (!user) {
-    // Not logged in — redirect to homepage
-    window.location.href = 'homepage.html';
+    window.location.href = 'index.html';
     return;
   }
 
@@ -1047,7 +1049,7 @@ btnMute.addEventListener('click', ()=>{
   if (logoutBtn) {
     logoutBtn.addEventListener('click', () => {
       localStorage.removeItem('blokfall_user');
-      window.location.href = 'homepage.html';
+      window.location.href = 'index.html';
     });
   }
 })();
@@ -1055,7 +1057,7 @@ btnMute.addEventListener('click', ()=>{
 // ─── Boot ─────────────────────────────────────────────────────────────────────
 function boot() {
   init();
-  showOverlay('BLOKFALL', 'NEON EDITION', 'OR PRESS ANY KEY');
+  showOverlay('BLOKFALL', '', 'OR PRESS ANY KEY');
   requestAnimationFrame(ts=>{ lastTime=ts; gameLoop(ts); });
 }
 if (document.readyState==='loading') {

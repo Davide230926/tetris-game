@@ -3,98 +3,160 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#080810" />
-  <title>BLOKFALL — PLAY</title>
+  <title>BLOKFALL — THE GAME</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,700;0,900;1,700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="home.css" />
 </head>
 <body>
-  <canvas id="bg"></canvas>
-  <div class="scanlines"></div>
+  <canvas id="bg-canvas"></canvas>
 
-  <!-- Game nav bar -->
-  <header id="game-nav">
-    <a class="game-logo" href="homepage.html">BLOK<span>FALL</span></a>
-    <div id="game-user-info">
-      <span id="game-username"></span>
-      <button class="gnav-btn" id="btn-logout">LOG OUT</button>
+  <!-- NAV -->
+  <nav id="nav">
+    <div class="nav-logo">BLOK<span>FALL</span></div>
+    <div class="nav-links">
+      <a href="#features">FEATURES</a>
+      <a href="#leaderboard">RANKINGS</a>
+      <a href="#about">ABOUT</a>
     </div>
-  </header>
+    <button class="nav-cta" id="btn-login-nav">LOG IN</button>
+  </nav>
 
-  <div id="wrapper">
-
-    <div id="left-panel">
-      <div class="panel-box anim-in" style="--delay:0.05s">
-        <div class="panel-label">SCORE</div>
-        <div class="panel-value" id="score">0</div>
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-grid-bg"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">NEON EDITION — 2025</div>
+      <h1 class="hero-title">
+        <span class="hero-t1">THE CLASSIC</span>
+        <span class="hero-t2">REINVENTED</span>
+      </h1>
+      <p class="hero-sub">Stack. Clear. Survive. The original block puzzle game rebuilt from scratch with a premium audio-visual experience.</p>
+      <div class="hero-actions">
+        <button class="btn-gold" id="btn-play-hero">PLAY NOW</button>
+        <button class="btn-ghost-gold" id="btn-login-hero">CREATE ACCOUNT</button>
       </div>
-      <div class="panel-box anim-in" style="--delay:0.12s">
-        <div class="panel-label">BEST</div>
-        <div class="panel-value" id="highscore">0</div>
-      </div>
-      <div class="panel-box anim-in" style="--delay:0.19s">
-        <div class="panel-label">LEVEL</div>
-        <div class="panel-value" id="level">1</div>
-      </div>
-      <div class="panel-box anim-in" style="--delay:0.26s">
-        <div class="panel-label">LINES</div>
-        <div class="panel-value" id="lines">0</div>
-      </div>
-
-      <div class="btn-stack anim-in" style="--delay:0.33s">
-        <button class="btn primary" id="btn-restart" type="button">
-          <span class="btn-icon">↺</span><span>RESTART</span>
-        </button>
-        <button class="btn" id="btn-pause" type="button">
-          <span class="btn-icon" id="btn-pause-icon">❚❚</span><span id="btn-pause-label">PAUSE</span>
-        </button>
-        <button class="btn ghost" id="btn-mute" type="button">
-          <span class="btn-icon" id="btn-mute-icon">🔊</span><span id="btn-mute-label">SOUND</span>
-        </button>
+      <div class="hero-stats">
+        <div class="hstat"><span class="hstat-num">20</span><span class="hstat-lbl">LEVELS</span></div>
+        <div class="hstat-div"></div>
+        <div class="hstat"><span class="hstat-num">7</span><span class="hstat-lbl">PIECES</span></div>
+        <div class="hstat-div"></div>
+        <div class="hstat"><span class="hstat-num">∞</span><span class="hstat-lbl">REPLAYABLE</span></div>
       </div>
     </div>
-
-    <div id="canvas-wrap" class="anim-in" style="--delay:0.0s">
-      <div class="canvas-corner tl"></div>
-      <div class="canvas-corner tr"></div>
-      <div class="canvas-corner bl"></div>
-      <div class="canvas-corner br"></div>
-      <canvas id="canvas" width="300" height="600"></canvas>
-      <div id="overlay" class="visible">
-        <div id="overlay-title">BLOKFALL</div>
-        <div id="overlay-sub">NEON EDITION</div>
-        <button class="btn primary big" id="btn-start" type="button">
-          <span class="btn-icon">▶</span><span>START GAME</span>
-        </button>
-        <div id="overlay-msg">OR PRESS ANY KEY</div>
+    <div class="hero-visual">
+      <div class="tetris-preview">
+        <canvas id="preview-canvas" width="200" height="400"></canvas>
+        <div class="preview-glow"></div>
+        <div class="preview-scanlines"></div>
       </div>
     </div>
+  </section>
 
-    <div id="right-panel">
-      <div class="panel-box anim-in" style="--delay:0.05s">
-        <div class="panel-label">NEXT</div>
-        <canvas id="next-canvas" width="120" height="120"></canvas>
+  <!-- FEATURES -->
+  <section id="features" data-reveal>
+    <div class="section-eyebrow">WHAT SETS IT APART</div>
+    <h2 class="section-title">BUILT DIFFERENT</h2>
+    <div class="features-grid">
+      <div class="feat-card" style="--i:0">
+        <div class="feat-icon">◈</div>
+        <div class="feat-title">SRS ROTATION</div>
+        <div class="feat-body">Full Super Rotation System with wall kicks — exactly like guideline Tetris. No shortcuts.</div>
       </div>
-      <div class="panel-box anim-in" id="hold-box" style="--delay:0.12s">
-        <div class="panel-label">HOLD</div>
-        <canvas id="hold-canvas" width="120" height="120"></canvas>
+      <div class="feat-card" style="--i:1">
+        <div class="feat-icon">♬</div>
+        <div class="feat-title">LIVE AUDIO ENGINE</div>
+        <div class="feat-body">Synthesized Korobeiniki rendered in real-time via Web Audio API. No MP3 files. Pure sound design.</div>
       </div>
-      <div class="panel-box controls-box anim-in" style="--delay:0.19s">
-        <div class="panel-label">CONTROLS</div>
-        <div class="ctrl-line"><span class="key">← →</span><span>Move</span></div>
-        <div class="ctrl-line"><span class="key">↑</span><span>Rotate</span></div>
-        <div class="ctrl-line"><span class="key">↓</span><span>Soft drop</span></div>
-        <div class="ctrl-line"><span class="key">SPC</span><span>Hard drop</span></div>
-        <div class="ctrl-line"><span class="key">C</span><span>Hold</span></div>
-        <div class="ctrl-line"><span class="key">P</span><span>Pause</span></div>
-        <div class="ctrl-line"><span class="key">R</span><span>Restart</span></div>
+      <div class="feat-card" style="--i:2">
+        <div class="feat-icon">◉</div>
+        <div class="feat-title">GHOST PIECE</div>
+        <div class="feat-body">Ghost piece projection and 7-bag randomizer for fair, strategic play every session.</div>
+      </div>
+      <div class="feat-card" style="--i:3">
+        <div class="feat-icon">⬡</div>
+        <div class="feat-title">PARTICLE FX</div>
+        <div class="feat-body">Line clears trigger particle explosions, screen shake, and full-screen flash effects.</div>
       </div>
     </div>
+  </section>
 
+  <!-- LEADERBOARD TEASER -->
+  <section id="leaderboard" data-reveal>
+    <div class="lb-left">
+      <div class="section-eyebrow">GLOBAL RANKINGS</div>
+      <h2 class="section-title">TOP PLAYERS</h2>
+      <p class="lb-desc">Create an account to save your scores and compete on the global leaderboard.</p>
+      <button class="btn-gold" id="btn-login-lb">JOIN THE RANKS</button>
+    </div>
+    <div class="lb-right">
+      <div class="lb-table">
+        <div class="lb-header">
+          <span>#</span><span>PLAYER</span><span>SCORE</span><span>LEVEL</span>
+        </div>
+        <div class="lb-row gold-row"><span class="lb-rank">01</span><span class="lb-name">PHANTOM_X</span><span class="lb-score">284,400</span><span class="lb-level">18</span></div>
+        <div class="lb-row"><span class="lb-rank">02</span><span class="lb-name">GRIDLCK</span><span class="lb-score">231,800</span><span class="lb-level">16</span></div>
+        <div class="lb-row"><span class="lb-rank">03</span><span class="lb-name">APEX_99</span><span class="lb-score">198,200</span><span class="lb-level">14</span></div>
+        <div class="lb-row"><span class="lb-rank">04</span><span class="lb-name">NOCTURNE</span><span class="lb-score">175,600</span><span class="lb-level">13</span></div>
+        <div class="lb-row"><span class="lb-rank">05</span><span class="lb-name">VOIDRUNNER</span><span class="lb-score">162,000</span><span class="lb-level">12</span></div>
+        <div class="lb-row lb-you"><span class="lb-rank">—</span><span class="lb-name">YOU?</span><span class="lb-score">???</span><span class="lb-level">—</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" data-reveal>
+    <div class="about-inner">
+      <div class="section-eyebrow">THE GAME</div>
+      <h2 class="section-title">CLASSIC RULES.<br>MODERN SOUL.</h2>
+      <div class="about-cols">
+        <p>BLOKFALL is a faithful recreation of the classic block-stacking puzzle game, rebuilt with a focus on feel. Every animation, sound, and visual effect has been hand-crafted to make each line clear satisfying.</p>
+        <p>No ads. No microtransactions. No bloat. Just the game, running at full speed in your browser — free, forever.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="footer">
+    <div class="footer-logo">BLOK<span>FALL</span></div>
+    <div class="footer-sub">A browser Tetris experience. Built with Web Audio API + Canvas.</div>
+    <div class="footer-links">
+      <a href="game.html">PLAY GAME</a>
+    </div>
+  </footer>
+
+  <!-- LOGIN MODAL -->
+  <div id="modal-overlay">
+    <div id="modal">
+      <button id="modal-close">✕</button>
+      <div class="modal-logo">BLOK<span>FALL</span></div>
+      <div id="modal-tabs">
+        <button class="modal-tab active" data-tab="login">LOG IN</button>
+        <button class="modal-tab" data-tab="signup">SIGN UP</button>
+      </div>
+      <form id="modal-form">
+        <div class="form-field">
+          <label>USERNAME</label>
+          <input type="text" id="field-username" placeholder="your_username" autocomplete="off" />
+        </div>
+        <div class="form-field" id="field-email-wrap" style="display:none">
+          <label>EMAIL</label>
+          <input type="email" id="field-email" placeholder="you@example.com" />
+        </div>
+        <div class="form-field">
+          <label>PASSWORD</label>
+          <input type="password" id="field-password" placeholder="••••••••" />
+        </div>
+        <div id="modal-error"></div>
+        <button type="submit" class="btn-gold modal-submit" id="modal-submit-btn">LOG IN</button>
+      </form>
+      <div class="modal-alt">
+        No account? <button class="modal-switch" id="modal-switch-btn">Sign up free</button>
+      </div>
+    </div>
   </div>
 
-  <script src="game.js"></script>
+  <script src="home.js"></script>
 </body>
 </html>
