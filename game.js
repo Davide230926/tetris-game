@@ -1054,6 +1054,28 @@ btnMute.addEventListener('click', ()=>{
   }
 })();
 
+// ─── Theme toggle ──────────────────────────────────────────────────────────────
+(function() {
+  const btn  = document.getElementById('btn-theme-game');
+  const html = document.documentElement;
+
+  function applyTheme(theme) {
+    html.setAttribute('data-theme', theme);
+    if (btn) btn.textContent = theme === 'light' ? '☾' : '☀';
+    localStorage.setItem('blokfall_theme', theme);
+  }
+
+  const saved = localStorage.getItem('blokfall_theme') || 'dark';
+  applyTheme(saved);
+
+  if (btn) {
+    btn.addEventListener('click', () => {
+      const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      applyTheme(next);
+    });
+  }
+})();
+
 // ─── Boot ─────────────────────────────────────────────────────────────────────
 function boot() {
   init();

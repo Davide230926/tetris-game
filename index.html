@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,700;0,900;1,700;1,900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="home.css" />
+  <script>try{var t=localStorage.getItem('blokfall_theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
 </head>
 <body>
   <canvas id="bg-canvas"></canvas>
@@ -24,10 +25,13 @@
       <a href="#leaderboard">RANKINGS</a>
       <a href="#about">ABOUT</a>
     </div>
-    <button class="nav-cta" id="btn-login-nav">
-      <span>LOG IN</span>
-      <span class="nav-cta-arrow">→</span>
-    </button>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <button class="theme-toggle" id="btn-theme" aria-label="Toggle light/dark mode" title="Toggle light/dark mode">☀</button>
+      <button class="nav-cta" id="btn-login-nav">
+        <span>LOG IN</span>
+        <span class="nav-cta-arrow">→</span>
+      </button>
+    </div>
   </nav>
 
   <!-- Vertical edge type -->

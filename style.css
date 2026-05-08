@@ -22,6 +22,54 @@
   --ease-s:       cubic-bezier(.4,0,.2,1);
 }
 
+/* ── Light mode ──────────────────────────────── */
+[data-theme="light"] {
+  --obsidian:   #f0ede6;
+  --surface:    #faf8f4;
+  --surface2:   #ece9e0;
+  --border:     rgba(160, 120, 32, 0.2);
+  --border-hi:  rgba(160, 120, 32, 0.5);
+  --text:       #1a1408;
+  --text-dim:   rgba(26, 20, 8, 0.5);
+}
+[data-theme="light"] #bg { opacity: 0.12; }
+[data-theme="light"] #game-nav {
+  background: rgba(240, 237, 230, 0.88);
+}
+[data-theme="light"] #canvas {
+  background: linear-gradient(180deg, #ede9e0 0%, #e4dfd4 100%);
+  box-shadow:
+    0 0 0 1px rgba(160,120,32,0.1),
+    0 0 30px rgba(240,192,64,0.08);
+}
+[data-theme="light"] #overlay {
+  background: rgba(240, 237, 230, 0.92);
+}
+[data-theme="light"] .scanlines {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0,0,0,0.015) 3px,
+    rgba(0,0,0,0.015) 4px
+  );
+}
+[data-theme="light"] #toast {
+  background: var(--surface);
+  color: var(--gold-dim);
+}
+
+/* Game theme toggle */
+.gnav-theme {
+  font-family: var(--font-m); font-size: 0.9rem;
+  padding: 4px 8px;
+  background: transparent; border: 1px solid var(--border); border-radius: 2px;
+  color: var(--text-dim); cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+  line-height: 1;
+}
+.gnav-theme:hover { border-color: var(--gold); color: var(--gold); }
+
 html, body { width:100%; height:100%; overflow:hidden; background:var(--obsidian); }
 
 body {
