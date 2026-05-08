@@ -229,15 +229,16 @@ let stars=[];
 function initStars() {
   bgCanvas.width=window.innerWidth;
   bgCanvas.height=window.innerHeight;
-  stars=Array.from({length:220},()=>({
+  // Gold-tinted stars to match the new design system
+  stars=Array.from({length:180},()=>({
     x:Math.random()*bgCanvas.width,
     y:Math.random()*bgCanvas.height,
-    r:Math.random()*1.4+0.2,
-    spd:Math.random()*0.13+0.02,
-    alpha:Math.random()*0.6+0.2,
-    ts:Math.random()*0.018+0.004,
+    r:Math.random()*1.2+0.2,
+    spd:Math.random()*0.08+0.01,
+    alpha:Math.random()*0.45+0.1,
+    ts:Math.random()*0.014+0.003,
     to:Math.random()*Math.PI*2,
-    hue:Math.random()<0.15 ? Math.random()*360 : -1,
+    gold:Math.random()<0.2,
   }));
 }
 function drawStars(t) {
@@ -246,8 +247,8 @@ function drawStars(t) {
     const a=s.alpha*(0.55+0.45*Math.sin(t*s.ts+s.to));
     bgCtx.beginPath();
     bgCtx.arc(s.x,s.y,s.r,0,Math.PI*2);
-    if (s.hue>=0) bgCtx.fillStyle=`hsla(${s.hue},80%,70%,${a})`;
-    else          bgCtx.fillStyle=`rgba(255,255,255,${a})`;
+    if (s.gold) bgCtx.fillStyle=`rgba(240,192,64,${a*0.7})`;
+    else        bgCtx.fillStyle=`rgba(232,232,240,${a})`;
     bgCtx.fill();
     s.y+=s.spd;
     if (s.y>bgCanvas.height){s.y=0;s.x=Math.random()*bgCanvas.width;}
@@ -1024,63 +1025,37 @@ btnMute.addEventListener('click', ()=>{
   b.addEventListener('mousedown', e => e.preventDefault());
 });
 
-// ─── Mobile canvas scaling ────────────────────────────────────────────────────
-const mcHoldCanvas = document.getElementById('mc-hold-canvas');
-const mcNextCanvas = document.getElementById('mc-next-canvas');
-const mcHoldCtx    = mcHoldCanvas ? mcHoldCanvas.getContext('2d') : null;
-const mcNextCtx    = mcNextCanvas ? mcNextCanvas.getContext('2d') : null;
+// ─── Auth check + user display ────────────────────────────────────────────────
+(function() {
+  const user = localStorage.getItem('blokfall_user');
+  const usernameEl = document.getElementById('game-username');
+  const logoutBtn  = document.getElementById('btn-logout');
 
-function isMobile() { return window.innerWidth <= 640; }
+  if (!user) {
+    // Not logged in — redirect to homepage
+    window.location.href = 'homepage.html';
+    return;
+  }
 
-function fitCanvasToScreen() {
-  if (!isMobile()) return;
-  const topbar  = document.getElementById('mobile-topbar');
-  const mctrl   = document.getElementById('mobile-controls');
-  const topH    = topbar  ? topbar.offsetHeight  : 0;
-  const ctrlH   = mctrl   ? mctrl.offsetHeight   : 0;
-  const avail   = window.innerHeight - topH - ctrlH;
-  // Keep 10:20 aspect ratio (COLS:ROWS), fit within available space and screen width
-  const maxW    = Math.min(window.innerWidth - 4, avail * (COLS / ROWS));
-  const cw      = Math.floor(maxW);
-  const ch      = Math.floor(cw * (ROWS / COLS));
-  canvas.style.width  = cw + 'px';
-  canvas.style.height = ch + 'px';
-}
+  try {
+    const parsed = JSON.parse(user);
+    if (usernameEl) usernameEl.textContent = parsed.username || user;
+  } catch(_) {
+    if (usernameEl) usernameEl.textContent = user;
+  }
 
-window.addEventListener('resize', fitCanvasToScreen);
-
-// Draw the mobile preview mini-canvases (hold/next in the controls bar)
-function drawMcPreviews() {
-  if (!mcHoldCtx || !mcNextCtx) return;
-  const sz = mcHoldCanvas.width;
-  mcHoldCtx.clearRect(0, 0, sz, sz);
-  mcNextCtx.clearRect(0, 0, sz, sz);
-  if (held) drawMiniPiece(mcHoldCtx, held, sz, sz, holdUsed ? 0.35 : 1);
-  if (next) drawMiniPiece(mcNextCtx, next, sz, sz);
-}
-
-// Mirror HUD values to the mobile topbar
-const mScore = document.getElementById('m-score');
-const mBest  = document.getElementById('m-best');
-const mLevel = document.getElementById('m-level');
-const mLines = document.getElementById('m-lines');
-
-const _origUpdateHUD = updateHUD;
-// Wrap updateHUD to also update mobile stats
-function updateHUD() {
-  _origUpdateHUD();
-  if (mScore) mScore.textContent = score;
-  if (mBest)  mBest.textContent  = highscore;
-  if (mLevel) mLevel.textContent = level;
-  if (mLines) mLines.textContent = lines;
-  drawMcPreviews();
-}
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+      localStorage.removeItem('blokfall_user');
+      window.location.href = 'homepage.html';
+    });
+  }
+})();
 
 // ─── Boot ─────────────────────────────────────────────────────────────────────
 function boot() {
   init();
-  fitCanvasToScreen();
-  showOverlay('TETRIS','NEON EDITION','OR PRESS ANY KEY');
+  showOverlay('BLOKFALL', 'NEON EDITION', 'OR PRESS ANY KEY');
   requestAnimationFrame(ts=>{ lastTime=ts; gameLoop(ts); });
 }
 if (document.readyState==='loading') {
@@ -1088,106 +1063,3 @@ if (document.readyState==='loading') {
 } else {
   boot();
 }
-
-// ─── Mobile topbar buttons ────────────────────────────────────────────────────
-const macRestart = document.getElementById('mac-restart');
-const macPause   = document.getElementById('mac-pause');
-const macMute    = document.getElementById('mac-mute');
-
-if (macRestart) macRestart.addEventListener('click', () => restartGame());
-if (macMute)    macMute.addEventListener('click', () => { ensureAudio(); setMuted(!muted); });
-if (macPause)   macPause.addEventListener('click', () => {
-  if (!running) {
-    if (gameOverState) { gameOverState=false; init(); }
-    startGame();
-  } else {
-    togglePause();
-  }
-});
-
-// Sync pause icon on mobile topbar too
-const _origSetPauseButton = setPauseButton;
-function setPauseButton(isPaused) {
-  _origSetPauseButton(isPaused);
-  if (macPause) macPause.textContent = isPaused ? '▶' : '❚❚';
-}
-
-// Sync mute icon on mobile topbar
-const _origSetMuted = setMuted;
-function setMuted(m) {
-  _origSetMuted(m);
-  if (macMute) macMute.textContent = m ? '🔇' : '🔊';
-}
-
-// ─── Mobile d-pad controls ────────────────────────────────────────────────────
-(function() {
-  const mcLeft     = document.getElementById('mc-left');
-  const mcRight    = document.getElementById('mc-right');
-  const mcDown     = document.getElementById('mc-down');
-  const mcUp       = document.getElementById('mc-up');
-  const mcHardDrop = document.getElementById('mc-harddrop');
-  const mcHoldBtn  = document.getElementById('mc-hold');
-
-  if (!mcLeft) return;
-
-  function mcPress(btn, fn, repeat=false) {
-    let interval=null;
-    function start(e) {
-      e.preventDefault();
-      btn.classList.add('pressed');
-      fn();
-      if (repeat) interval=setInterval(fn, 110);
-    }
-    function end(e) {
-      e.preventDefault();
-      btn.classList.remove('pressed');
-      if (interval) { clearInterval(interval); interval=null; }
-    }
-    btn.addEventListener('touchstart', start, {passive:false});
-    btn.addEventListener('touchend',   end,   {passive:false});
-    btn.addEventListener('touchcancel',end,   {passive:false});
-    btn.addEventListener('mousedown',  start);
-    btn.addEventListener('mouseup',    end);
-    btn.addEventListener('mouseleave', end);
-  }
-
-  mcPress(mcLeft, ()=>{
-    if (!running||paused) return;
-    if (!collides(current.shape, current.x-1, current.y)) {
-      current.x--; ghostY=calcGhost();
-      if (locking) lockTimer=0;
-      sfxMove();
-    }
-  }, true);
-
-  mcPress(mcRight, ()=>{
-    if (!running||paused) return;
-    if (!collides(current.shape, current.x+1, current.y)) {
-      current.x++; ghostY=calcGhost();
-      if (locking) lockTimer=0;
-      sfxMove();
-    }
-  }, true);
-
-  mcPress(mcDown, ()=>{
-    if (!running||paused) return;
-    moveDown(true); dropTimer=0;
-  }, true);
-
-  mcPress(mcUp, ()=>{
-    if (!running||paused) return;
-    const r=tryRotate(current, 1);
-    if (r) { current=r; ghostY=calcGhost(); if(locking)lockTimer=0; sfxRotate(); }
-  });
-
-  mcPress(mcHardDrop, ()=>{
-    if (!running||paused) return;
-    hardDrop();
-  });
-
-  mcPress(mcHoldBtn, ()=>{
-    if (!running||paused) return;
-    doHold();
-    drawMcPreviews();
-  });
-})();
