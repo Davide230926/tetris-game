@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#02020a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
   <title>TETRIS // NEON</title>
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -75,6 +77,19 @@
       </div>
     </div>
 
+  </div>
+
+  <div id="mobile-controls">
+    <div class="mc-row">
+      <button class="mc-btn" id="mc-hold" aria-label="Hold"><span>⬛</span><small>HOLD</small></button>
+      <button class="mc-btn mc-wide" id="mc-up" aria-label="Rotate"><span>↻</span><small>ROTATE</small></button>
+      <button class="mc-btn" id="mc-harddrop" aria-label="Hard Drop"><span>⬇</span><small>DROP</small></button>
+    </div>
+    <div class="mc-row">
+      <button class="mc-btn mc-big" id="mc-left" aria-label="Move Left"><span>◀</span></button>
+      <button class="mc-btn mc-big" id="mc-down" aria-label="Soft Drop"><span>▼</span></button>
+      <button class="mc-btn mc-big" id="mc-right" aria-label="Move Right"><span>▶</span></button>
+    </div>
   </div>
 
   <script src="game.js"></script>

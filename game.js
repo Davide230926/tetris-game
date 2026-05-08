@@ -1035,3 +1035,76 @@ if (document.readyState==='loading') {
 } else {
   boot();
 }
+
+// ─── Mobile controls ──────────────────────────────────────────────────────────
+(function() {
+  const mcLeft     = document.getElementById('mc-left');
+  const mcRight    = document.getElementById('mc-right');
+  const mcDown     = document.getElementById('mc-down');
+  const mcUp       = document.getElementById('mc-up');
+  const mcHardDrop = document.getElementById('mc-harddrop');
+  const mcHold     = document.getElementById('mc-hold');
+
+  if (!mcLeft) return; // not in DOM
+
+  function mcPress(btn, fn, repeat=false) {
+    let interval=null;
+    function start(e) {
+      e.preventDefault();
+      btn.classList.add('pressed');
+      fn();
+      if (repeat) interval=setInterval(fn, 120);
+    }
+    function end(e) {
+      e.preventDefault();
+      btn.classList.remove('pressed');
+      if (interval) { clearInterval(interval); interval=null; }
+    }
+    btn.addEventListener('touchstart', start, {passive:false});
+    btn.addEventListener('touchend', end, {passive:false});
+    btn.addEventListener('touchcancel', end, {passive:false});
+    // Also support mouse for desktop testing
+    btn.addEventListener('mousedown', start);
+    btn.addEventListener('mouseup', end);
+    btn.addEventListener('mouseleave', end);
+  }
+
+  mcPress(mcLeft, ()=>{
+    if (!running || paused) return;
+    if (!collides(current.shape, current.x-1, current.y)) {
+      current.x--; ghostY=calcGhost();
+      if (locking) lockTimer=0;
+      sfxMove();
+    }
+  }, true);
+
+  mcPress(mcRight, ()=>{
+    if (!running || paused) return;
+    if (!collides(current.shape, current.x+1, current.y)) {
+      current.x++; ghostY=calcGhost();
+      if (locking) lockTimer=0;
+      sfxMove();
+    }
+  }, true);
+
+  mcPress(mcDown, ()=>{
+    if (!running || paused) return;
+    moveDown(true); dropTimer=0;
+  }, true);
+
+  mcPress(mcUp, ()=>{
+    if (!running || paused) return;
+    const r=tryRotate(current, 1);
+    if (r) { current=r; ghostY=calcGhost(); if(locking)lockTimer=0; sfxRotate(); }
+  });
+
+  mcPress(mcHardDrop, ()=>{
+    if (!running || paused) return;
+    hardDrop();
+  });
+
+  mcPress(mcHold, ()=>{
+    if (!running || paused) return;
+    doHold();
+  });
+})();
