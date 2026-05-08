@@ -28,29 +28,82 @@
 
   <!-- HERO -->
   <section id="hero">
-    <div class="hero-left">
-      <div class="hero-tag">
-        <span class="hero-tag-dot"></span>
-        <span>Browser Arcade &bull; 2025</span>
+    <!-- Background layers -->
+    <div class="hero-bg-grid"></div>
+    <div class="hero-glow-1"></div>
+    <div class="hero-glow-2"></div>
+
+    <div class="hero-inner">
+      <!-- LEFT: copy -->
+      <div class="hero-left">
+        <div class="hero-badge">
+          <span class="hero-badge-dot"></span>
+          <span>Free to play &nbsp;&bull;&nbsp; No download &nbsp;&bull;&nbsp; No ads</span>
+        </div>
+
+        <h1 class="hero-heading">
+          The block game<br>
+          <span class="hero-heading-gradient">rebuilt for&nbsp;2025.</span>
+        </h1>
+
+        <p class="hero-body">Stack. Clear. Survive. A browser-native Tetris with real-time synthesized audio, SRS rotation, particle effects, and a global leaderboard — crafted from scratch by one person.</p>
+
+        <div class="hero-actions">
+          <button class="btn-primary hero-btn-play" id="btn-play-hero">
+            <span class="hero-btn-icon">&#9654;</span>
+            Play Now &mdash; It&rsquo;s Free
+          </button>
+          <button class="btn-ghost" id="btn-login-hero">Create Account</button>
+        </div>
+
+        <div class="hero-social-proof">
+          <div class="hsp-avatars">
+            <span class="hsp-av" style="background:#2d6bff">P</span>
+            <span class="hsp-av" style="background:#b44fff">G</span>
+            <span class="hsp-av" style="background:#00cfff">A</span>
+            <span class="hsp-av" style="background:#f07020">N</span>
+            <span class="hsp-av" style="background:#ff2d78">V</span>
+          </div>
+          <span class="hsp-text"><strong>284,400</strong> top score &nbsp;&bull;&nbsp; Global leaderboard live</span>
+        </div>
       </div>
-      <h1 class="hero-heading">The classic<br><em>reinvented.</em></h1>
-      <p class="hero-body">Stack. Clear. Survive. The original block puzzle rebuilt with a premium audio-visual experience — free, forever, in your browser.</p>
-      <div class="hero-actions">
-        <button class="btn-primary" id="btn-play-hero">Play Now</button>
-        <button class="btn-secondary" id="btn-login-hero">Create Account</button>
-      </div>
-      <div class="hero-pills">
-        <span class="pill">20 Levels</span>
-        <span class="pill">7 Pieces</span>
-        <span class="pill">SRS Rotation</span>
-        <span class="pill">No Ads</span>
-      </div>
-    </div>
-    <div class="hero-right">
-      <div class="preview-frame">
-        <div class="preview-label">LIVE PREVIEW</div>
-        <canvas id="preview-canvas" width="200" height="400"></canvas>
-        <div class="preview-overlay"></div>
+
+      <!-- RIGHT: game terminal -->
+      <div class="hero-right">
+        <div class="hero-terminal">
+          <!-- Terminal header bar -->
+          <div class="terminal-bar">
+            <div class="terminal-dots">
+              <span class="tdot tdot-r"></span>
+              <span class="tdot tdot-y"></span>
+              <span class="tdot tdot-g"></span>
+            </div>
+            <span class="terminal-title">BLOKFALL &mdash; LIVE PREVIEW</span>
+            <span class="terminal-status"><span class="terminal-status-dot"></span>ACTIVE</span>
+          </div>
+
+          <!-- Canvas -->
+          <div class="terminal-body">
+            <canvas id="preview-canvas" width="200" height="400"></canvas>
+            <div class="terminal-scanlines"></div>
+          </div>
+
+          <!-- Stats bar -->
+          <div class="terminal-footer">
+            <div class="tstat"><span class="tstat-lbl">LEVEL</span><span class="tstat-val" id="prev-level">1</span></div>
+            <div class="tstat-div"></div>
+            <div class="tstat"><span class="tstat-lbl">PIECES</span><span class="tstat-val">7</span></div>
+            <div class="tstat-div"></div>
+            <div class="tstat"><span class="tstat-lbl">SRS</span><span class="tstat-val tstat-green">ON</span></div>
+            <div class="tstat-div"></div>
+            <div class="tstat"><span class="tstat-lbl">AUDIO</span><span class="tstat-val tstat-green">LIVE</span></div>
+          </div>
+        </div>
+
+        <!-- Floating feature chips -->
+        <div class="hero-chip hero-chip-1">&#9654;&nbsp; SRS Wall Kicks</div>
+        <div class="hero-chip hero-chip-2">&#9836;&nbsp; Web Audio Synth</div>
+        <div class="hero-chip hero-chip-3">&#10022;&nbsp; Particle FX</div>
       </div>
     </div>
   </section>
