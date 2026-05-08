@@ -48,7 +48,7 @@ toast.id = 'toast';
 document.body.appendChild(toast);
 
 // ─── Constants ────────────────────────────────────────────────────────────────
-const COLS = 10, ROWS = 20, CELL = 36;
+const COLS = 10, ROWS = 20, CELL = 32;
 const LOCK_DELAY = 500;
 const LINE_SCORES = [0, 100, 300, 500, 800];
 

@@ -323,13 +323,13 @@
   let currentTab = 'login';
 
   function openModal() {
-    overlay.classList.add('open');
+    overlay.classList.add('visible');
     document.body.style.overflow = 'hidden';
     document.getElementById('field-username').focus();
   }
 
   function closeModal() {
-    overlay.classList.remove('open');
+    overlay.classList.remove('visible');
     document.body.style.overflow = '';
     modalError.textContent = '';
   }
@@ -341,17 +341,13 @@
     if (el) el.addEventListener('click', openModal);
   });
 
-  // PLAY NOW — redirect if logged in, else open modal
-  const playBtn = document.getElementById('btn-play-hero');
-  if (playBtn) {
-    playBtn.addEventListener('click', () => {
-      if (localStorage.getItem('blokfall_user')) {
-        window.location.href = 'game.html';
-      } else {
-        window.location.href = 'game.html';
-      }
+  // PLAY NOW — go straight to game (auth gate handled by game page)
+  ['btn-play-hero', 'btn-play-cta'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('click', () => {
+      window.location.href = 'game.html';
     });
-  }
+  });
 
   // Close triggers
   if (modalClose) modalClose.addEventListener('click', closeModal);
@@ -363,7 +359,7 @@
   }
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
+    if (e.key === 'Escape' && overlay.classList.contains('visible')) closeModal();
   });
 
   /* ──────────────────────────────────────────
@@ -374,14 +370,15 @@
 
     tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
 
+    const submitText = submitBtn.querySelector('.btn-gold-text') || submitBtn;
     if (tab === 'signup') {
       emailWrap.style.display = 'flex';
-      submitBtn.textContent   = 'CREATE ACCOUNT';
+      submitText.textContent  = 'CREATE ACCOUNT';
       switchBtn.textContent   = 'Log in instead';
       modalAlt.childNodes[0].textContent = 'Already have an account? ';
     } else {
       emailWrap.style.display = 'none';
-      submitBtn.textContent   = 'LOG IN';
+      submitText.textContent  = 'LOG IN';
       switchBtn.textContent   = 'Sign up free';
       modalAlt.childNodes[0].textContent = 'No account? ';
     }
@@ -506,8 +503,16 @@
 
       const section = entry.target;
 
+      // Reveal section itself
+      section.classList.add('visible');
+
       // Feat cards
       section.querySelectorAll('.feat-card').forEach(card => {
+        card.classList.add('visible');
+      });
+
+      // Howto cards
+      section.querySelectorAll('.howto-card').forEach(card => {
         card.classList.add('visible');
       });
 
@@ -527,5 +532,32 @@
   document.querySelectorAll('[data-reveal]').forEach(section => {
     revealObserver.observe(section);
   });
+
+  /* ──────────────────────────────────────────
+     X. MARQUEE — duplicate content for seamless loop
+  ────────────────────────────────────────── */
+  const marqueeTrack = document.querySelector('.marquee-track');
+  if (marqueeTrack) {
+    marqueeTrack.innerHTML = marqueeTrack.innerHTML + marqueeTrack.innerHTML;
+  }
+
+  /* ──────────────────────────────────────────
+     8. CURSOR GLOW — follows pointer subtly
+  ────────────────────────────────────────── */
+  const cursorGlow = document.getElementById('cursor-glow');
+  if (cursorGlow) {
+    let tx = 0, ty = 0, cx = 0, cy = 0;
+    document.addEventListener('mousemove', (e) => {
+      tx = e.clientX;
+      ty = e.clientY;
+    });
+    function animateCursor() {
+      cx += (tx - cx) * 0.12;
+      cy += (ty - cy) * 0.12;
+      cursorGlow.style.transform = `translate(${cx}px, ${cy}px)`;
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+  }
 
 })();
