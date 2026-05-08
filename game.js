@@ -80,6 +80,7 @@ const KICKS_I = [
 // ─── State ────────────────────────────────────────────────────────────────────
 let board, current, next, held, holdUsed;
 let score, highscore=0, level, lines;
+let _highscoreKey = 'blokfall_best_global'; // overwritten once auth resolves
 let running=false, paused=false, gameOverState=false;
 let dropTimer=0, lockTimer=0, locking=false;
 let lastTime=0;
@@ -417,7 +418,11 @@ function drawMiniPiece(ctx2d, piece, cw, ch, alpha=1) {
 // ─── HUD ──────────────────────────────────────────────────────────────────────
 function updateHUD() {
   scoreEl.textContent=score;
-  if (score>highscore){ highscore=score; highEl.textContent=highscore; }
+  if (score>highscore){
+    highscore=score;
+    highEl.textContent=highscore;
+    try { localStorage.setItem(_highscoreKey, highscore); } catch(_){}
+  }
   levelEl.textContent=level;
   linesEl.textContent=lines;
 }
@@ -1028,7 +1033,7 @@ btnMute.addEventListener('click', ()=>{
   b.addEventListener('mousedown', e => e.preventDefault());
 });
 
-// ─── Auth check + user display ────────────────────────────────────────────────
+// ─── Auth check + user display + per-account highscore ────────────────────────
 (function() {
   const user = localStorage.getItem('blokfall_user');
   const usernameEl = document.getElementById('game-username');
@@ -1039,39 +1044,24 @@ btnMute.addEventListener('click', ()=>{
     return;
   }
 
+  let username = user;
   try {
     const parsed = JSON.parse(user);
-    if (usernameEl) usernameEl.textContent = parsed.username || user;
-  } catch(_) {
-    if (usernameEl) usernameEl.textContent = user;
-  }
+    username = parsed.username || user;
+  } catch(_) {}
+
+  if (usernameEl) usernameEl.textContent = username;
+
+  // Load this account's highscore
+  _highscoreKey = 'blokfall_best_' + username;
+  const saved = parseInt(localStorage.getItem(_highscoreKey), 10) || 0;
+  highscore = saved;
+  if (highEl) highEl.textContent = highscore;
 
   if (logoutBtn) {
     logoutBtn.addEventListener('click', () => {
       localStorage.removeItem('blokfall_user');
       window.location.href = 'index.html';
-    });
-  }
-})();
-
-// ─── Theme toggle ──────────────────────────────────────────────────────────────
-(function() {
-  const btn  = document.getElementById('btn-theme-game');
-  const html = document.documentElement;
-
-  function applyTheme(theme) {
-    html.setAttribute('data-theme', theme);
-    if (btn) btn.textContent = theme === 'light' ? '☾' : '☀';
-    localStorage.setItem('blokfall_theme', theme);
-  }
-
-  const saved = localStorage.getItem('blokfall_theme') || 'dark';
-  applyTheme(saved);
-
-  if (btn) {
-    btn.addEventListener('click', () => {
-      const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-      applyTheme(next);
     });
   }
 })();

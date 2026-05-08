@@ -555,30 +555,6 @@
   }
 
   /* ──────────────────────────────────────────
-     9. THEME TOGGLE
-  ────────────────────────────────────────── */
-  (function initTheme() {
-    const btn = document.getElementById('btn-theme');
-    const html = document.documentElement;
-
-    function applyTheme(theme) {
-      html.setAttribute('data-theme', theme);
-      if (btn) btn.textContent = theme === 'light' ? '☾' : '☀';
-      localStorage.setItem('blokfall_theme', theme);
-    }
-
-    const saved = localStorage.getItem('blokfall_theme') || 'dark';
-    applyTheme(saved);
-
-    if (btn) {
-      btn.addEventListener('click', () => {
-        const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-        applyTheme(next);
-      });
-    }
-  })();
-
-  /* ──────────────────────────────────────────
      8. CURSOR GLOW — follows pointer subtly
   ────────────────────────────────────────── */
   const cursorGlow = document.getElementById('cursor-glow');
