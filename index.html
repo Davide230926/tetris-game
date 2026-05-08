@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TETRIS // NEON</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <canvas id="bg"></canvas>
+
+  <div id="wrapper">
+
+    <div id="left-panel">
+      <div class="panel-box anim-in" style="--delay:0.05s">
+        <div class="panel-label">SCORE</div>
+        <div class="panel-value" id="score">0</div>
+      </div>
+      <div class="panel-box anim-in" style="--delay:0.12s">
+        <div class="panel-label">BEST</div>
+        <div class="panel-value" id="highscore">0</div>
+      </div>
+      <div class="panel-box anim-in" style="--delay:0.19s">
+        <div class="panel-label">LEVEL</div>
+        <div class="panel-value" id="level">1</div>
+      </div>
+      <div class="panel-box anim-in" style="--delay:0.26s">
+        <div class="panel-label">LINES</div>
+        <div class="panel-value" id="lines">0</div>
+      </div>
+
+      <div class="btn-stack anim-in" style="--delay:0.33s">
+        <button class="btn primary" id="btn-restart" type="button">
+          <span class="btn-icon">↺</span><span>RESTART</span>
+        </button>
+        <button class="btn" id="btn-pause" type="button">
+          <span class="btn-icon" id="btn-pause-icon">❚❚</span><span id="btn-pause-label">PAUSE</span>
+        </button>
+        <button class="btn ghost" id="btn-mute" type="button">
+          <span class="btn-icon" id="btn-mute-icon">🔊</span><span id="btn-mute-label">SOUND</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="canvas-wrap" class="anim-in" style="--delay:0.0s">
+      <canvas id="canvas" width="300" height="600"></canvas>
+      <div id="overlay" class="visible">
+        <div id="overlay-title">TETRIS</div>
+        <div id="overlay-sub">NEON EDITION</div>
+        <button class="btn primary big" id="btn-start" type="button">
+          <span class="btn-icon">▶</span><span>START GAME</span>
+        </button>
+        <div id="overlay-msg">OR PRESS ANY KEY</div>
+      </div>
+    </div>
+
+    <div id="right-panel">
+      <div class="panel-box anim-in" style="--delay:0.05s">
+        <div class="panel-label">NEXT</div>
+        <canvas id="next-canvas" width="120" height="120"></canvas>
+      </div>
+      <div class="panel-box anim-in" id="hold-box" style="--delay:0.12s">
+        <div class="panel-label">HOLD</div>
+        <canvas id="hold-canvas" width="120" height="120"></canvas>
+      </div>
+      <div class="panel-box controls-box anim-in" style="--delay:0.19s">
+        <div class="panel-label">CONTROLS</div>
+        <div class="ctrl-line"><span class="key">←→</span> Move</div>
+        <div class="ctrl-line"><span class="key">↑</span> Rotate</div>
+        <div class="ctrl-line"><span class="key">↓</span> Soft drop</div>
+        <div class="ctrl-line"><span class="key">Space</span> Hard drop</div>
+        <div class="ctrl-line"><span class="key">C</span> Hold</div>
+        <div class="ctrl-line"><span class="key">P</span> Pause</div>
+        <div class="ctrl-line"><span class="key">R</span> Restart</div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
