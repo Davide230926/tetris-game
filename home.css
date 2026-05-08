@@ -524,6 +524,7 @@ section { position: relative; z-index: 3; }
 .preview-id::before {
   content: '◆';
   margin-right: 6px;
+  font-family: system-ui, sans-serif;
   color: var(--gold);
   animation: pulse 1.6s ease-in-out infinite;
 }
@@ -629,7 +630,7 @@ section { position: relative; z-index: 3; }
   color: var(--obsidian);
 }
 .marquee-track span { flex-shrink: 0; }
-.marquee-dot { font-size: 0.9rem; }
+.marquee-dot { font-size: 0.9rem; font-family: system-ui, sans-serif; }
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
@@ -721,6 +722,7 @@ section { position: relative; z-index: 3; }
 
 .feat-icon {
   font-size: 2.4rem;
+  font-family: system-ui, sans-serif;
   color: var(--gold);
   margin-bottom: 28px;
   line-height: 1;
@@ -1019,6 +1021,7 @@ section { position: relative; z-index: 3; }
   position: absolute;
   top: 60px; left: 50%;
   transform: translateX(-50%);
+  font-family: system-ui, sans-serif;
   font-size: 1.6rem;
   color: var(--gold);
   opacity: 0.4;
