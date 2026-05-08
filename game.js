@@ -1033,6 +1033,26 @@ btnMute.addEventListener('click', ()=>{
   b.addEventListener('mousedown', e => e.preventDefault());
 });
 
+// ─── Viewport scaling — fit game into any desktop height ──────────────────────
+(function initScale() {
+  const wrapper = document.getElementById('wrapper');
+  const nav     = document.getElementById('game-nav');
+
+  function scale() {
+    const navH      = nav ? nav.offsetHeight : 48;
+    const available = window.innerHeight - navH;
+    // Natural height of wrapper content: canvas 640 + padding 24 + gap slack
+    const naturalH  = 640 + 24;
+    const ratio = Math.min(1, available / naturalH);
+    wrapper.style.transform = ratio < 1 ? `scale(${ratio.toFixed(4)})` : '';
+    // Collapse wrapper height so body doesn't scroll
+    wrapper.style.height = ratio < 1 ? `${available}px` : '';
+  }
+
+  scale();
+  window.addEventListener('resize', scale);
+})();
+
 // ─── Auth check + user display + per-account highscore ────────────────────────
 (function() {
   const user = localStorage.getItem('blokfall_user');

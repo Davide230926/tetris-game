@@ -106,6 +106,8 @@ body {
   padding: 12px 20px;
   flex: 1;
   justify-content: center;
+  /* Scale entire game area to fit short viewports */
+  transform-origin: center center;
 }
 
 /* ── Side panels ─────────────────────────────────── */
