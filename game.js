@@ -176,6 +176,7 @@ function lockPiece() {
   }));
   holdUsed=false;
   holdBox.classList.remove('locked');
+  updateHUD();
   checkLines();
   spawnPiece();
 }

@@ -169,23 +169,28 @@ body {
 }
 
 /* ── New best celebration ─────────────────────────── */
-@keyframes bestShimmer {
-  0%   { left: -110%; }
-  100% { left: 110%; }
-}
 @keyframes bestGlow {
-  0%,100% { border-color: var(--border); box-shadow: none; }
-  30%      { border-color: var(--gold); box-shadow: 0 0 28px rgba(240,192,64,0.45), inset 0 0 12px rgba(240,192,64,0.08); }
-  70%      { border-color: var(--gold); box-shadow: 0 0 28px rgba(240,192,64,0.45), inset 0 0 12px rgba(240,192,64,0.08); }
+  0%   { border-top-color: var(--gold); box-shadow: 0 0 0px rgba(240,192,64,0); }
+  25%  { border-top-color: #ffe878;     box-shadow: 0 0 32px rgba(240,192,64,0.6), inset 0 0 16px rgba(240,192,64,0.1); }
+  70%  { border-top-color: #ffe878;     box-shadow: 0 0 32px rgba(240,192,64,0.6), inset 0 0 16px rgba(240,192,64,0.1); }
+  100% { border-top-color: var(--gold); box-shadow: 0 0 0px rgba(240,192,64,0); }
+}
+@keyframes bestSweep {
+  0%   { transform: translateX(-100%) skewX(-15deg); opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { transform: translateX(300%) skewX(-15deg); opacity: 0; }
 }
 .panel-box.new-best {
-  animation: bestGlow 1.8s var(--ease-s) forwards;
+  animation: bestGlow 1.6s ease-in-out forwards;
 }
-.panel-box.new-best::before {
-  left: -110%;
-  animation: bestShimmer 0.75s var(--ease-s) 0.1s forwards !important;
-  background: linear-gradient(110deg, transparent 0%, rgba(240,192,64,0.22) 50%, transparent 100%) !important;
-  transition: none !important;
+.panel-box.new-best::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(105deg, transparent 30%, rgba(240,192,64,0.18) 50%, transparent 70%);
+  animation: bestSweep 0.9s ease-in-out 0.1s forwards;
+  pointer-events: none;
+  z-index: 1;
 }
 
 #next-canvas {
