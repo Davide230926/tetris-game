@@ -82,6 +82,7 @@ let board, current, next, held, holdUsed;
 let score, highscore=0, level, lines;
 let running=false, paused=false, gameOverState=false;
 let dropTimer=0, lockTimer=0, locking=false, lockMoves=0;
+let newBestCelebrated=false;
 let lastTime=0;
 let particles=[];
 let clearAnim=null;
@@ -420,6 +421,10 @@ function updateHUD() {
   if (score>highscore){
     highscore=score;
     highEl.textContent=highscore;
+    if (!newBestCelebrated) {
+      newBestCelebrated=true;
+      celebrateNewBest();
+    }
     if (_sessionToken) {
       fetch('/api/score', {
         method: 'POST',
@@ -431,6 +436,15 @@ function updateHUD() {
   levelEl.textContent=level;
   linesEl.textContent=lines;
 }
+function celebrateNewBest() {
+  const box = highEl.closest('.panel-box');
+  if (!box) return;
+  box.classList.remove('new-best'); void box.offsetWidth;
+  box.classList.add('new-best');
+  showToast('NEW BEST!');
+  setTimeout(() => box.classList.remove('new-best'), 1800);
+}
+
 function popScore(el) {
   el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop');
   setTimeout(()=>el.classList.remove('pop'),220);
@@ -857,7 +871,7 @@ function init() {
   updateHUD();
   drawHoldPiece();
   holdBox.classList.remove('locked');
-  running=false; paused=false; gameOverState=false;
+  running=false; paused=false; gameOverState=false; newBestCelebrated=false;
   setPauseButton(false);
 }
 

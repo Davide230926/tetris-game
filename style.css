@@ -73,7 +73,23 @@ body {
 }
 .game-logo span { color: var(--gold); }
 
-#game-user-info { display:flex; align-items:center; gap:14px; }
+#game-user-info { display:flex; align-items:center; gap:10px; }
+
+.lang-switcher {
+  display: flex; align-items: center; gap: 2px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 6px; padding: 3px;
+}
+.lang-btn {
+  font-family: var(--font-m); font-size: 0.5rem; font-weight: 700;
+  letter-spacing: 0.05em; color: rgba(255,255,255,0.35);
+  background: transparent; border: none; border-radius: 4px;
+  padding: 3px 6px; cursor: pointer;
+  transition: color 0.15s, background 0.15s;
+}
+.lang-btn:hover { color: rgba(255,255,255,0.7); }
+.lang-btn.active { color: var(--gold); background: rgba(240,192,64,0.12); }
 #game-username {
   font-size: 0.6rem; letter-spacing: 0.22em;
   color: var(--gold); opacity: 0.85; text-transform: uppercase;
@@ -150,6 +166,26 @@ body {
 .panel-value.pop {
   transform: scale(1.22); color: var(--gold);
   text-shadow: 0 0 32px var(--gold);
+}
+
+/* ── New best celebration ─────────────────────────── */
+@keyframes bestShimmer {
+  0%   { left: -110%; }
+  100% { left: 110%; }
+}
+@keyframes bestGlow {
+  0%,100% { border-color: var(--border); box-shadow: none; }
+  30%      { border-color: var(--gold); box-shadow: 0 0 28px rgba(240,192,64,0.45), inset 0 0 12px rgba(240,192,64,0.08); }
+  70%      { border-color: var(--gold); box-shadow: 0 0 28px rgba(240,192,64,0.45), inset 0 0 12px rgba(240,192,64,0.08); }
+}
+.panel-box.new-best {
+  animation: bestGlow 1.8s var(--ease-s) forwards;
+}
+.panel-box.new-best::before {
+  left: -110%;
+  animation: bestShimmer 0.75s var(--ease-s) 0.1s forwards !important;
+  background: linear-gradient(110deg, transparent 0%, rgba(240,192,64,0.22) 50%, transparent 100%) !important;
+  transition: none !important;
 }
 
 #next-canvas {
@@ -254,15 +290,12 @@ body {
     inset 0 0 40px rgba(0,0,0,0.55);
   background: linear-gradient(180deg, #05050f 0%, #09091e 100%);
 }
-#canvas.shake { animation: shake 0.45s ease; }
+#canvas.shake { animation: shake 0.3s ease; }
 @keyframes shake {
   0%,100% { transform:translate(0,0); }
-  12% { transform:translate(-7px,4px); }
-  24% { transform:translate(6px,-5px); }
-  38% { transform:translate(-5px,5px); }
-  54% { transform:translate(5px,-3px); }
-  70% { transform:translate(-3px,3px); }
-  86% { transform:translate(2px,-2px); }
+  20% { transform:translate(-3px,2px); }
+  45% { transform:translate(3px,-2px); }
+  70% { transform:translate(-2px,1px); }
 }
 
 /* ══════════════════════════════════════════════════
@@ -329,6 +362,7 @@ body {
   font-style: italic;
   letter-spacing: 0.08em;
   line-height: 0.9;
+  text-align: center;
   color: transparent;
   background: linear-gradient(160deg, #fff8e0 0%, var(--gold) 40%, #c88a00 100%);
   -webkit-background-clip: text;
