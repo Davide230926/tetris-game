@@ -237,9 +237,15 @@
     if (el) el.addEventListener('click', openModal);
   });
 
-  ['btn-play-nav','btn-play-hero','btn-play-cta'].forEach(id => {
+  ['btn-play-nav','btn-play-hero'].forEach(id => {
     const el = document.getElementById(id);
-    if (el) el.addEventListener('click', () => { window.location.href = 'game.html'; });
+    if (el) el.addEventListener('click', () => {
+      if (localStorage.getItem('blokfall_token')) {
+        window.location.href = 'game.html';
+      } else {
+        openModal();
+      }
+    });
   });
 
   if (modalClose) modalClose.addEventListener('click', closeModal);
@@ -257,19 +263,19 @@
     tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
 
     const isSignup = tab === 'signup';
+    const t = window.i18n ? window.i18n.t.bind(window.i18n) : k => k;
     emailWrap.style.display = isSignup ? 'flex' : 'none';
-    submitBtn.textContent = isSignup ? 'Create Account' : 'Log In';
+    submitBtn.textContent = isSignup ? t('modal_submit_signup') : t('modal_submit_login');
 
     const labelEl = document.getElementById('label-username');
     if (labelEl) {
-      labelEl.textContent = isSignup ? 'Username' : 'Username or Email';
+      labelEl.textContent = isSignup ? t('modal_lbl_user_signup') : t('modal_lbl_user_login');
     }
-    document.getElementById('field-username').placeholder = isSignup ? 'your_username' : 'username or email';
+    document.getElementById('field-username').placeholder = isSignup ? t('modal_ph_user_signup') : t('modal_ph_user_login');
 
-    if (switchBtn) switchBtn.textContent = isSignup ? 'Log in instead' : 'Sign up free';
-    if (modalAlt && modalAlt.childNodes[0]) {
-      modalAlt.childNodes[0].textContent = isSignup ? 'Already have an account? ' : 'No account? ';
-    }
+    if (switchBtn) switchBtn.textContent = isSignup ? t('modal_switch_signup') : t('modal_switch_login');
+    const altText = document.getElementById('modal-alt-text');
+    if (altText) altText.textContent = isSignup ? t('modal_alt_signup') : t('modal_alt_login');
 
     if (modalError) modalError.textContent = '';
     document.getElementById('field-username').value = '';
@@ -287,15 +293,16 @@
   /* ──────────────────────────────────────────
      7. AUTH
   ────────────────────────────────────────── */
-  function getUsers() {
-    try { return JSON.parse(localStorage.getItem('blokfall_users') || '[]'); } catch { return []; }
-  }
-  function saveUsers(u) { localStorage.setItem('blokfall_users', JSON.stringify(u)); }
   function setError(msg) { if (modalError) modalError.textContent = msg; }
+  function setSubmitLoading(on) {
+    if (!submitBtn) return;
+    submitBtn.disabled = on;
+    submitBtn.textContent = on ? 'Please wait…' : (currentTab === 'signup' ? 'Create Account' : 'Log In');
+  }
 
   const form = document.getElementById('modal-form');
   if (form) {
-    form.addEventListener('submit', e => {
+    form.addEventListener('submit', async e => {
       e.preventDefault();
       setError('');
 
@@ -308,26 +315,36 @@
       if (!password) { setError('Password is required.'); return; }
       if (password.length < 4) { setError('Password must be at least 4 characters.'); return; }
 
-      const users = getUsers();
+      setSubmitLoading(true);
 
-      if (currentTab === 'login') {
-        const match = users.find(u =>
-          (u.username === username || u.email === username) && u.password === password
-        );
-        if (!match) { setError('Invalid username/email or password.'); return; }
-        localStorage.setItem('blokfall_user', JSON.stringify({ username: match.username }));
-        window.location.href = 'game.html';
-      } else {
-        if (!email) { setError('Email is required.'); return; }
-        if (users.find(u => u.username === username)) { setError('That username is already taken.'); return; }
-        if (users.find(u => u.email.toLowerCase() === email.toLowerCase())) {
-          setError('An account with that email already exists.'); return;
+      try {
+        let res, data;
+
+        if (currentTab === 'login') {
+          res = await fetch('/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ identifier: username, password })
+          });
+          data = await res.json();
+          if (!res.ok) { setError(data.error || 'Login failed.'); setSubmitLoading(false); return; }
+        } else {
+          if (!email) { setError('Email is required.'); setSubmitLoading(false); return; }
+          res = await fetch('/api/signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password, email })
+          });
+          data = await res.json();
+          if (!res.ok) { setError(data.error || 'Signup failed.'); setSubmitLoading(false); return; }
         }
-        const newUser = { username, password, email: email.toLowerCase() };
-        users.push(newUser);
-        saveUsers(users);
-        localStorage.setItem('blokfall_user', JSON.stringify({ username }));
+
+        localStorage.setItem('blokfall_token', data.token);
+        localStorage.setItem('blokfall_user', JSON.stringify({ username: data.username }));
         window.location.href = 'game.html';
+      } catch {
+        setError('Network error — please try again.');
+        setSubmitLoading(false);
       }
     });
   }

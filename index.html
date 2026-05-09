@@ -15,45 +15,48 @@
   <nav id="nav">
     <a href="#" class="nav-logo">BLOK<span>FALL</span></a>
     <div class="nav-links">
-      <a href="#features">Features</a>
-      <a href="#howto">How to Play</a>
-      <a href="#leaderboard">Rankings</a>
-      <a href="#about">About</a>
+      <a href="#features" data-i18n="nav_features">Features</a>
+      <a href="#howto" data-i18n="nav_howto">How to Play</a>
+      <a href="#leaderboard" data-i18n="nav_rankings">Rankings</a>
+      <a href="#about" data-i18n="nav_about">About</a>
     </div>
     <div class="nav-right">
-      <button class="nav-login" id="btn-login-nav">Log in</button>
-      <button class="nav-play" id="btn-play-nav">Play Free</button>
+      <div class="lang-switcher">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="it">IT</button>
+        <button class="lang-btn" data-lang="de">DE</button>
+      </div>
+      <button class="nav-login" id="btn-login-nav" data-i18n="nav_login">Log in</button>
+      <button class="nav-play" id="btn-play-nav" data-i18n="nav_play">Play Free</button>
     </div>
   </nav>
 
   <!-- HERO -->
   <section id="hero">
-    <!-- Background layers -->
     <div class="hero-bg-grid"></div>
     <div class="hero-glow-1"></div>
     <div class="hero-glow-2"></div>
 
     <div class="hero-inner">
-      <!-- LEFT: copy -->
       <div class="hero-left">
         <div class="hero-badge">
           <span class="hero-badge-dot"></span>
-          <span>Free to play &nbsp;&bull;&nbsp; No download &nbsp;&bull;&nbsp; No ads</span>
+          <span data-i18n="hero_badge">Free to play &nbsp;&bull;&nbsp; No download &nbsp;&bull;&nbsp; No ads</span>
         </div>
 
         <h1 class="hero-heading">
-          The block game<br>
-          <span class="hero-heading-gradient">rebuilt for&nbsp;2025.</span>
+          <span data-i18n="hero_heading1">The block game</span><br>
+          <span class="hero-heading-gradient" data-i18n="hero_heading2">rebuilt for&nbsp;2025.</span>
         </h1>
 
-        <p class="hero-body">Stack. Clear. Survive. A browser-native Tetris with real-time synthesized audio, SRS rotation, particle effects, and a global leaderboard — crafted from scratch by one person.</p>
+        <p class="hero-body" data-i18n="hero_body">Stack. Clear. Survive. A browser-native Tetris with real-time synthesized audio, SRS rotation, particle effects, and a global leaderboard — crafted from scratch by one person.</p>
 
         <div class="hero-actions">
           <button class="btn-primary hero-btn-play" id="btn-play-hero">
             <span class="hero-btn-icon">&#9654;</span>
-            Play Now &mdash; It&rsquo;s Free
+            <span data-i18n="hero_play">Play Now &mdash; It&rsquo;s Free</span>
           </button>
-          <button class="btn-ghost" id="btn-login-hero">Create Account</button>
+          <button class="btn-ghost" id="btn-login-hero" data-i18n="hero_signup">Create Account</button>
         </div>
 
         <div class="hero-social-proof">
@@ -64,14 +67,12 @@
             <span class="hsp-av" style="background:#f07020">N</span>
             <span class="hsp-av" style="background:#ff2d78">V</span>
           </div>
-          <span class="hsp-text"><strong>284,400</strong> top score &nbsp;&bull;&nbsp; Global leaderboard live</span>
+          <span class="hsp-text" data-i18n="hero_social" data-i18n-html="1"><strong>284,400</strong> top score &nbsp;&bull;&nbsp; Global leaderboard live</span>
         </div>
       </div>
 
-      <!-- RIGHT: game terminal -->
       <div class="hero-right">
         <div class="hero-terminal">
-          <!-- Terminal header bar -->
           <div class="terminal-bar">
             <div class="terminal-dots">
               <span class="tdot tdot-r"></span>
@@ -81,14 +82,10 @@
             <span class="terminal-title">BLOKFALL &mdash; LIVE PREVIEW</span>
             <span class="terminal-status"><span class="terminal-status-dot"></span>ACTIVE</span>
           </div>
-
-          <!-- Canvas -->
           <div class="terminal-body">
             <canvas id="preview-canvas" width="200" height="400"></canvas>
             <div class="terminal-scanlines"></div>
           </div>
-
-          <!-- Stats bar -->
           <div class="terminal-footer">
             <div class="tstat"><span class="tstat-lbl">LEVEL</span><span class="tstat-val" id="prev-level">1</span></div>
             <div class="tstat-div"></div>
@@ -99,8 +96,6 @@
             <div class="tstat"><span class="tstat-lbl">AUDIO</span><span class="tstat-val tstat-green">LIVE</span></div>
           </div>
         </div>
-
-        <!-- Floating feature chips -->
         <div class="hero-chip hero-chip-1">&#9654;&nbsp; SRS Wall Kicks</div>
         <div class="hero-chip hero-chip-2">&#9836;&nbsp; Web Audio Synth</div>
         <div class="hero-chip hero-chip-3">&#10022;&nbsp; Particle FX</div>
@@ -129,32 +124,32 @@
   <!-- FEATURES BENTO -->
   <section id="features" data-reveal>
     <div class="section-header">
-      <div class="section-label">01 &mdash; Features</div>
-      <h2 class="section-heading">Built <em>different.</em></h2>
+      <div class="section-label" data-i18n="sec_features_label">01 &mdash; Features</div>
+      <h2 class="section-heading" data-i18n="sec_features_h" data-i18n-html="1">Built <em>different.</em></h2>
     </div>
     <div class="bento">
       <div class="bento-card" style="--i:0">
         <div class="bento-num">01</div>
-        <div class="bento-title">SRS Rotation</div>
-        <div class="bento-body">Full Super Rotation System with wall kicks &mdash; exactly like guideline Tetris. No shortcuts, no compromises.</div>
+        <div class="bento-title" data-i18n="f1_title">SRS Rotation</div>
+        <div class="bento-body" data-i18n="f1_body">Full Super Rotation System with wall kicks &mdash; exactly like guideline Tetris. No shortcuts, no compromises.</div>
         <div class="bento-accent"></div>
       </div>
       <div class="bento-card" style="--i:1">
         <div class="bento-num">02</div>
-        <div class="bento-title">Live Audio Engine</div>
-        <div class="bento-body">Korobeiniki synthesized in real-time via Web Audio API. No MP3s &mdash; pure sound design.</div>
+        <div class="bento-title" data-i18n="f2_title">Live Audio Engine</div>
+        <div class="bento-body" data-i18n="f2_body">Korobeiniki synthesized in real-time via Web Audio API. No MP3s &mdash; pure sound design.</div>
         <div class="bento-accent"></div>
       </div>
       <div class="bento-card" style="--i:2">
         <div class="bento-num">03</div>
-        <div class="bento-title">Ghost Piece</div>
-        <div class="bento-body">Ghost projection and 7-bag randomizer for fair, strategic play every session.</div>
+        <div class="bento-title" data-i18n="f3_title">Ghost Piece</div>
+        <div class="bento-body" data-i18n="f3_body">Ghost projection and 7-bag randomizer for fair, strategic play every session.</div>
         <div class="bento-accent"></div>
       </div>
       <div class="bento-card" style="--i:3">
         <div class="bento-num">04</div>
-        <div class="bento-title">Particle FX</div>
-        <div class="bento-body">Line clears trigger particle explosions, screen shake, and full-screen flash effects that make every clear feel earned.</div>
+        <div class="bento-title" data-i18n="f4_title">Particle FX</div>
+        <div class="bento-body" data-i18n="f4_body">Line clears trigger particle explosions, screen shake, and full-screen flash effects that make every clear feel earned.</div>
         <div class="bento-accent"></div>
       </div>
     </div>
@@ -163,43 +158,43 @@
   <!-- HOW TO PLAY -->
   <section id="howto" data-reveal>
     <div class="section-header">
-      <div class="section-label">02 &mdash; Controls</div>
-      <h2 class="section-heading">How to <em>play.</em></h2>
+      <div class="section-label" data-i18n="sec_howto_label">02 &mdash; Controls</div>
+      <h2 class="section-heading" data-i18n="sec_howto_h" data-i18n-html="1">How to <em>play.</em></h2>
     </div>
     <div class="controls-grid">
       <div class="ctrl-row" style="--i:0">
         <div class="ctrl-keys"><span class="kbd">L</span><span class="kbd">R</span></div>
         <div class="ctrl-info">
-          <div class="ctrl-name">Move</div>
-          <div class="ctrl-desc">Slide the piece left or right</div>
+          <div class="ctrl-name" data-i18n="ctrl_move">Move</div>
+          <div class="ctrl-desc" data-i18n="ctrl_move_desc">Slide the piece left or right</div>
         </div>
       </div>
       <div class="ctrl-row" style="--i:1">
         <div class="ctrl-keys"><span class="kbd">UP</span></div>
         <div class="ctrl-info">
-          <div class="ctrl-name">Rotate</div>
-          <div class="ctrl-desc">Spin clockwise with wall kicks</div>
+          <div class="ctrl-name" data-i18n="ctrl_rotate">Rotate</div>
+          <div class="ctrl-desc" data-i18n="ctrl_rotate_desc">Spin clockwise with wall kicks</div>
         </div>
       </div>
       <div class="ctrl-row" style="--i:2">
         <div class="ctrl-keys"><span class="kbd">DN</span></div>
         <div class="ctrl-info">
-          <div class="ctrl-name">Soft Drop</div>
-          <div class="ctrl-desc">Speed up the fall, earn bonus points</div>
+          <div class="ctrl-name" data-i18n="ctrl_soft">Soft Drop</div>
+          <div class="ctrl-desc" data-i18n="ctrl_soft_desc">Speed up the fall, earn bonus points</div>
         </div>
       </div>
       <div class="ctrl-row" style="--i:3">
         <div class="ctrl-keys"><span class="kbd kbd-wide">SPACE</span></div>
         <div class="ctrl-info">
-          <div class="ctrl-name">Hard Drop</div>
-          <div class="ctrl-desc">Slam the piece down instantly</div>
+          <div class="ctrl-name" data-i18n="ctrl_hard">Hard Drop</div>
+          <div class="ctrl-desc" data-i18n="ctrl_hard_desc">Slam the piece down instantly</div>
         </div>
       </div>
       <div class="ctrl-row" style="--i:4">
         <div class="ctrl-keys"><span class="kbd">P</span></div>
         <div class="ctrl-info">
-          <div class="ctrl-name">Pause</div>
-          <div class="ctrl-desc">Take a breather</div>
+          <div class="ctrl-name" data-i18n="ctrl_pause">Pause</div>
+          <div class="ctrl-desc" data-i18n="ctrl_pause_desc">Take a breather</div>
         </div>
       </div>
     </div>
@@ -209,51 +204,33 @@
   <section id="leaderboard" data-reveal>
     <div class="lb-wrap">
       <div class="lb-left">
-        <div class="section-label">03 &mdash; Rankings</div>
-        <h2 class="section-heading">Top<br><em>players.</em></h2>
-        <p class="lb-copy">Create an account to save your scores and climb the global leaderboard. The top spot is waiting.</p>
-        <button class="btn-primary" id="btn-login-lb">Join the Ranks</button>
+        <div class="section-label" data-i18n="sec_lb_label">03 &mdash; Rankings</div>
+        <h2 class="section-heading" data-i18n="sec_lb_h" data-i18n-html="1">Top<br><em>players.</em></h2>
+        <p class="lb-copy" data-i18n="lb_copy">Create an account to save your scores and climb the global leaderboard. The top spot is waiting.</p>
+        <button class="btn-primary" id="btn-login-lb" data-i18n="lb_join">Join the Ranks</button>
       </div>
       <div class="lb-right">
         <div class="lb-table">
           <div class="lb-head">
-            <span>Rank</span><span>Player</span><span>Score</span><span>Lv</span>
+            <span data-i18n="lb_rank">Rank</span><span data-i18n="lb_player">Player</span><span data-i18n="lb_score">Score</span><span>Lv</span>
           </div>
           <div class="lb-row lb-gold" style="--i:0">
-            <span class="lb-rank">1</span>
-            <span class="lb-name">PHANTOM_X</span>
-            <span class="lb-score">284,400</span>
-            <span class="lb-lv">18</span>
+            <span class="lb-rank">1</span><span class="lb-name">PHANTOM_X</span><span class="lb-score">284,400</span><span class="lb-lv">18</span>
           </div>
           <div class="lb-row" style="--i:1">
-            <span class="lb-rank">2</span>
-            <span class="lb-name">GRIDLCK</span>
-            <span class="lb-score">231,800</span>
-            <span class="lb-lv">16</span>
+            <span class="lb-rank">2</span><span class="lb-name">GRIDLCK</span><span class="lb-score">231,800</span><span class="lb-lv">16</span>
           </div>
           <div class="lb-row" style="--i:2">
-            <span class="lb-rank">3</span>
-            <span class="lb-name">APEX_99</span>
-            <span class="lb-score">198,200</span>
-            <span class="lb-lv">14</span>
+            <span class="lb-rank">3</span><span class="lb-name">APEX_99</span><span class="lb-score">198,200</span><span class="lb-lv">14</span>
           </div>
           <div class="lb-row" style="--i:3">
-            <span class="lb-rank">4</span>
-            <span class="lb-name">NOCTURNE</span>
-            <span class="lb-score">175,600</span>
-            <span class="lb-lv">13</span>
+            <span class="lb-rank">4</span><span class="lb-name">NOCTURNE</span><span class="lb-score">175,600</span><span class="lb-lv">13</span>
           </div>
           <div class="lb-row" style="--i:4">
-            <span class="lb-rank">5</span>
-            <span class="lb-name">VOIDRUNNER</span>
-            <span class="lb-score">162,000</span>
-            <span class="lb-lv">12</span>
+            <span class="lb-rank">5</span><span class="lb-name">VOIDRUNNER</span><span class="lb-score">162,000</span><span class="lb-lv">12</span>
           </div>
           <div class="lb-row lb-you" style="--i:5">
-            <span class="lb-rank">?</span>
-            <span class="lb-name">You?</span>
-            <span class="lb-score">---</span>
-            <span class="lb-lv">-</span>
+            <span class="lb-rank">?</span><span class="lb-name" data-i18n="lb_you">You?</span><span class="lb-score">---</span><span class="lb-lv">-</span>
           </div>
         </div>
       </div>
@@ -263,29 +240,18 @@
   <!-- ABOUT -->
   <section id="about" data-reveal>
     <div class="about-inner">
-      <div class="section-label">04 &mdash; About</div>
-      <h2 class="section-heading">Built by<br><em>Davide.</em></h2>
+      <div class="section-label" data-i18n="sec_about_label">04 &mdash; About</div>
+      <h2 class="section-heading" data-i18n="sec_about_h" data-i18n-html="1">Built by<br><em>Davide.</em></h2>
       <div class="about-cols">
         <div class="about-col">
-          <p>Hi &mdash; I'm <strong>Davide</strong>, a student and AI enthusiast. I built BLOKFALL completely from scratch, for free, as a personal project to push what's possible in the browser.</p>
-          <p>No team. No budget. Just curiosity, code, and a lot of late nights.</p>
+          <p data-i18n="about_p1" data-i18n-html="1">Hi &mdash; I'm <strong>Davide</strong>, a student and AI enthusiast. I built BLOKFALL completely from scratch, for free, as a personal project to push what's possible in the browser.</p>
+          <p data-i18n="about_p2">No team. No budget. Just curiosity, code, and a lot of late nights.</p>
         </div>
         <div class="about-col">
-          <p>Every piece of this &mdash; the SRS rotation engine, the synthesized audio, the particle effects, the UI &mdash; was hand-crafted with the help of AI tools that made it possible to build something this polished as a solo student.</p>
-          <p>Free to play. Free forever. Enjoy.</p>
+          <p data-i18n="about_p3">Every piece of this &mdash; the SRS rotation engine, the synthesized audio, the particle effects, the UI &mdash; was hand-crafted with the help of AI tools that made it possible to build something this polished as a solo student.</p>
+          <p data-i18n="about_p4">Free to play. Free forever. Enjoy.</p>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section id="cta" data-reveal>
-    <div class="cta-inner">
-      <div class="cta-text">
-        <p class="cta-label">Free to play &bull; No download &bull; No ads</p>
-        <h2 class="cta-heading">Ready to <em>play?</em></h2>
-      </div>
-      <button class="btn-primary btn-large" id="btn-play-cta">Start Playing</button>
     </div>
   </section>
 
@@ -294,12 +260,12 @@
     <div class="footer-inner">
       <div class="footer-logo">BLOK<span>FALL</span></div>
       <div class="footer-links">
-        <a href="#features">Features</a>
-        <a href="#howto">Controls</a>
-        <a href="#leaderboard">Rankings</a>
-        <a href="game.html">Play</a>
+        <a href="#features" data-i18n="nav_features">Features</a>
+        <a href="#howto" data-i18n="footer_controls">Controls</a>
+        <a href="#leaderboard" data-i18n="footer_rankings">Rankings</a>
+        <a href="game.html" data-i18n="footer_play">Play</a>
       </div>
-      <div class="footer-copy">&copy; 2025 &mdash; Built with obsession</div>
+      <div class="footer-copy" data-i18n="footer_copy">&copy; 2025 &mdash; Built with obsession</div>
     </div>
   </footer>
 
@@ -309,29 +275,30 @@
       <button id="modal-close" aria-label="Close">&times;</button>
       <div class="modal-logo">BLOK<span>FALL</span></div>
       <div id="modal-tabs">
-        <button class="modal-tab active" data-tab="login">Log In</button>
-        <button class="modal-tab" data-tab="signup">Sign Up</button>
+        <button class="modal-tab active" data-tab="login" data-i18n="modal_tab_login">Log In</button>
+        <button class="modal-tab" data-tab="signup" data-i18n="modal_tab_signup">Sign Up</button>
       </div>
       <form id="modal-form">
         <div class="form-field">
-          <label id="label-username">Username or Email</label>
-          <input type="text" id="field-username" placeholder="username or email" autocomplete="off" />
+          <label id="label-username" data-i18n="modal_lbl_user_login">Username or Email</label>
+          <input type="text" id="field-username" placeholder="username or email" autocomplete="off" data-i18n="modal_ph_user_login" />
         </div>
         <div class="form-field" id="field-email-wrap" style="display:none">
-          <label>Email</label>
-          <input type="email" id="field-email" placeholder="you@example.com" />
+          <label data-i18n="modal_lbl_email">Email</label>
+          <input type="email" id="field-email" placeholder="you@example.com" data-i18n="modal_ph_email" />
         </div>
         <div class="form-field">
-          <label>Password</label>
+          <label data-i18n="modal_lbl_pass">Password</label>
           <input type="password" id="field-password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" />
         </div>
         <div id="modal-error"></div>
-        <button type="submit" class="btn-primary modal-submit" id="modal-submit-btn">Log In</button>
+        <button type="submit" class="btn-primary modal-submit" id="modal-submit-btn" data-i18n="modal_submit_login">Log In</button>
       </form>
-      <p class="modal-alt">No account? <button class="modal-switch" id="modal-switch-btn">Sign up free</button></p>
+      <p class="modal-alt"><span id="modal-alt-text" data-i18n="modal_alt_login">No account? </span><button class="modal-switch" id="modal-switch-btn" data-i18n="modal_switch_login">Sign up free</button></p>
     </div>
   </div>
 
+  <script src="i18n.js"></script>
   <script src="home.js"></script>
 </body>
 </html>

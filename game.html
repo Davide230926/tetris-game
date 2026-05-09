@@ -19,7 +19,12 @@
     <a class="game-logo" href="index.html">BLOK<span>FALL</span></a>
     <div id="game-user-info">
       <span id="game-username"></span>
-      <button class="gnav-btn" id="btn-logout">LOG OUT</button>
+      <div class="lang-switcher">
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="it">IT</button>
+        <button class="lang-btn" data-lang="de">DE</button>
+      </div>
+      <button class="gnav-btn" id="btn-logout" data-i18n="btn_logout">LOG OUT</button>
     </div>
   </header>
 
@@ -28,31 +33,31 @@
     <!-- LEFT PANEL -->
     <div id="left-panel">
       <div class="panel-box anim-in" style="--delay:0.05s">
-        <div class="panel-label">SCORE</div>
+        <div class="panel-label" data-i18n="game_score">SCORE</div>
         <div class="panel-value" id="score">0</div>
       </div>
       <div class="panel-box anim-in" style="--delay:0.12s">
-        <div class="panel-label">BEST</div>
+        <div class="panel-label" data-i18n="game_best">BEST</div>
         <div class="panel-value" id="highscore">0</div>
       </div>
       <div class="panel-box anim-in" style="--delay:0.19s">
-        <div class="panel-label">LEVEL</div>
+        <div class="panel-label" data-i18n="game_level">LEVEL</div>
         <div class="panel-value" id="level">1</div>
       </div>
       <div class="panel-box anim-in" style="--delay:0.26s">
-        <div class="panel-label">LINES</div>
+        <div class="panel-label" data-i18n="game_lines">LINES</div>
         <div class="panel-value" id="lines">0</div>
       </div>
 
       <div class="btn-stack anim-in" style="--delay:0.33s">
-        <button class="btn primary" id="btn-restart" type="button">
-          <span class="btn-icon" id="btn-restart-icon">R</span><span>RESTART</span>
+        <button class="btn" id="btn-restart" type="button">
+          <span class="btn-icon" id="btn-restart-icon">R</span><span data-i18n="btn_restart">RESTART</span>
         </button>
         <button class="btn" id="btn-pause" type="button">
-          <span class="btn-icon" id="btn-pause-icon">II</span><span id="btn-pause-label">PAUSE</span>
+          <span class="btn-icon" id="btn-pause-icon">II</span><span id="btn-pause-label" data-i18n="btn_pause">PAUSE</span>
         </button>
-        <button class="btn ghost" id="btn-mute" type="button">
-          <span class="btn-icon" id="btn-mute-icon">ON</span><span id="btn-mute-label">SOUND</span>
+        <button class="btn" id="btn-mute" type="button">
+          <span class="btn-icon" id="btn-mute-icon">ON</span><span id="btn-mute-label" data-i18n="btn_sound_on">SOUND</span>
         </button>
       </div>
     </div>
@@ -70,15 +75,15 @@
         <div class="ov-scanlines"></div>
         <div class="ov-grid"></div>
         <div id="ov-state-wrap">
-          <div id="overlay-eyebrow">NEON EDITION</div>
+          <div id="overlay-eyebrow" data-i18n="ov_eyebrow">NEON EDITION</div>
           <div id="overlay-title">BLOKFALL</div>
           <div id="overlay-sub"></div>
         </div>
         <div id="ov-action-wrap">
           <button class="btn primary big" id="btn-start" type="button">
-            <span class="btn-icon">&#9654;</span><span>START GAME</span>
+            <span class="btn-icon">&#9654;</span><span data-i18n="btn_start">START GAME</span>
           </button>
-          <div id="overlay-msg">OR PRESS ANY KEY</div>
+          <div id="overlay-msg" data-i18n="ov_any_key">OR PRESS ANY KEY</div>
         </div>
       </div>
     </div>
@@ -86,22 +91,23 @@
     <!-- RIGHT PANEL -->
     <div id="right-panel">
       <div class="panel-box anim-in" style="--delay:0.05s">
-        <div class="panel-label">NEXT</div>
+        <div class="panel-label" data-i18n="game_next">NEXT</div>
         <canvas id="next-canvas" width="140" height="140"></canvas>
       </div>
       <div class="panel-box controls-box anim-in" style="--delay:0.12s">
-        <div class="panel-label">CONTROLS</div>
-        <div class="ctrl-line"><span class="key">L / R</span><span>Move</span></div>
-        <div class="ctrl-line"><span class="key">UP</span><span>Rotate</span></div>
-        <div class="ctrl-line"><span class="key">DN</span><span>Soft drop</span></div>
-        <div class="ctrl-line"><span class="key">SPC</span><span>Hard drop</span></div>
-        <div class="ctrl-line"><span class="key">P</span><span>Pause</span></div>
-        <div class="ctrl-line"><span class="key">R</span><span>Restart</span></div>
+        <div class="panel-label" data-i18n="game_controls">CONTROLS</div>
+        <div class="ctrl-line"><span class="key">L / R</span><span data-i18n="game_move">Move</span></div>
+        <div class="ctrl-line"><span class="key">UP</span><span data-i18n="game_rotate">Rotate</span></div>
+        <div class="ctrl-line"><span class="key">DN</span><span data-i18n="game_softdrop">Soft drop</span></div>
+        <div class="ctrl-line"><span class="key">SPC</span><span data-i18n="game_harddrop">Hard drop</span></div>
+        <div class="ctrl-line"><span class="key">P</span><span data-i18n="game_pause">Pause</span></div>
+        <div class="ctrl-line"><span class="key">R</span><span data-i18n="game_restart">Restart</span></div>
       </div>
     </div>
 
   </div>
 
+  <script src="i18n.js"></script>
   <script src="game.js"></script>
 </body>
 </html>
