@@ -420,7 +420,6 @@ function updateHUD() {
   scoreEl.textContent=score;
   if (score>highscore){
     highscore=score;
-    highEl.textContent=highscore;
     if (!newBestCelebrated) {
       newBestCelebrated=true;
       celebrateNewBest();
@@ -433,6 +432,7 @@ function updateHUD() {
       }).catch(()=>{});
     }
   }
+  highEl.textContent=highscore;
   levelEl.textContent=level;
   linesEl.textContent=lines;
 }
