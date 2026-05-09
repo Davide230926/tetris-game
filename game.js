@@ -80,9 +80,8 @@ const KICKS_I = [
 // ─── State ────────────────────────────────────────────────────────────────────
 let board, current, next, held, holdUsed;
 let score, highscore=0, level, lines;
-let _highscoreKey = 'blokfall_best_global'; // overwritten once auth resolves
 let running=false, paused=false, gameOverState=false;
-let dropTimer=0, lockTimer=0, locking=false;
+let dropTimer=0, lockTimer=0, locking=false, lockMoves=0;
 let lastTime=0;
 let particles=[];
 let clearAnim=null;
@@ -223,7 +222,7 @@ function spawnPiece() {
   next=makePiece(nextFromBag());
   drawNextPiece();
   ghostY=calcGhost();
-  locking=false; lockTimer=0;
+  locking=false; lockTimer=0; lockMoves=0;
   if (collides(current.shape,current.x,current.y)) doGameOver();
 }
 
@@ -421,7 +420,13 @@ function updateHUD() {
   if (score>highscore){
     highscore=score;
     highEl.textContent=highscore;
-    try { localStorage.setItem(_highscoreKey, highscore); } catch(_){}
+    if (_sessionToken) {
+      fetch('/api/score', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + _sessionToken },
+        body: JSON.stringify({ score: highscore })
+      }).catch(()=>{});
+    }
   }
   levelEl.textContent=level;
   linesEl.textContent=lines;
@@ -450,7 +455,7 @@ function showToast(text) {
 // ─── Overlay ──────────────────────────────────────────────────────────────────
 function showOverlay(title, sub, msg, cls='', showStartBtn=true) {
   ovTitle.textContent = title;
-  if (ovEyebrow) ovEyebrow.textContent = cls === 'gameover' ? 'FINAL SCORE' : cls === 'paused' ? 'GAME PAUSED' : 'NEON EDITION';
+  if (ovEyebrow) ovEyebrow.textContent = cls === 'gameover' ? (window.i18n ? window.i18n.t('ov_final') : 'FINAL SCORE') : cls === 'paused' ? (window.i18n ? window.i18n.t('ov_paused_sub') : 'GAME PAUSED') : (window.i18n ? window.i18n.t('ov_eyebrow') : 'NEON EDITION');
   ovSub.textContent = sub;
   ovMsg.textContent = msg;
   overlay.className = 'visible' + (cls ? ' ' + cls : '');
@@ -820,11 +825,11 @@ function gameLoop(timestamp) {
 
 function moveDown(isSoftDrop) {
   if (collides(current.shape,current.x,current.y+1)) {
-    if (!locking) { locking=true; lockTimer=0; }
+    if (!locking) { locking=true; lockTimer=0; lockMoves=0; }
   } else {
     current.y++;
     if (isSoftDrop) { score+=1; scoreEl.textContent=score; }
-    locking=false; lockTimer=0;
+    locking=false; lockTimer=0; lockMoves=0;
     ghostY=calcGhost();
   }
 }
@@ -836,7 +841,6 @@ function hardDrop() {
   scoreEl.textContent=score;
   sfxDrop();
   spawnParticles(current.x*CELL+CELL/2, current.y*CELL+CELL/2, current.color, 12);
-  triggerShake();
   lockPiece();
 }
 
@@ -884,8 +888,9 @@ function doGameOver() {
       if(board[r]&&board[r][c])
         spawnParticles(c*CELL+CELL/2,r*CELL+CELL/2,board[r][c],8);
   setTimeout(()=>{
-    showOverlay('GAME OVER', score.toLocaleString(), 'PRESS ANY KEY TO RETRY', 'gameover');
-    btnStart.querySelector('span:last-child').textContent = 'PLAY AGAIN';
+    const t = window.i18n ? window.i18n.t.bind(window.i18n) : k => k;
+    showOverlay('GAME OVER', score.toLocaleString(), t('ov_retry'), 'gameover');
+    btnStart.querySelector('span:last-child').textContent = t('ov_play_again');
   }, 450);
 }
 
@@ -894,7 +899,7 @@ function togglePause() {
   paused=!paused;
   if (paused) {
     stopMusic();
-    showOverlay('PAUSED', 'TAKE A BREATH', 'PRESS P TO RESUME', 'paused', false);
+    showOverlay('PAUSED', 'TAKE A BREATH', window.i18n ? window.i18n.t('ov_retry') : 'PRESS P TO RESUME', 'paused', false);
     setPauseButton(true);
   } else {
     hideOverlay();
@@ -905,12 +910,13 @@ function togglePause() {
 }
 
 function setPauseButton(isPaused) {
+  const t = window.i18n ? window.i18n.t.bind(window.i18n) : k => k;
   if (isPaused) {
     btnPauseIc.textContent='>';
-    btnPauseLbl.textContent='RESUME';
+    btnPauseLbl.textContent=t('btn_resume');
   } else {
     btnPauseIc.textContent='II';
-    btnPauseLbl.textContent='PAUSE';
+    btnPauseLbl.textContent=t('btn_pause');
   }
 }
 
@@ -928,7 +934,7 @@ function doHold() {
     drawNextPiece();
   }
   ghostY=calcGhost();
-  locking=false; lockTimer=0;
+  locking=false; lockTimer=0; lockMoves=0;
   drawHoldPiece();
   holdBox.classList.add('locked');
 }
@@ -943,6 +949,7 @@ document.addEventListener('keydown', e=>{
     if (e.key==='p'||e.key==='P') { if(running) { e.preventDefault(); togglePause(); } return; }
     if (gameOverState||!running) {
       e.preventDefault();
+      if (e.repeat) return;
       if (gameOverState) { gameOverState=false; init(); }
       startGame();
       return;
@@ -955,7 +962,7 @@ document.addEventListener('keydown', e=>{
       e.preventDefault();
       if (!collides(current.shape,current.x-1,current.y)){
         current.x--; ghostY=calcGhost();
-        if(locking) lockTimer=0;
+        if(locking && lockMoves<15){ lockTimer=0; lockMoves++; }
         sfxMove();
       }
       break;
@@ -963,7 +970,7 @@ document.addEventListener('keydown', e=>{
       e.preventDefault();
       if (!collides(current.shape,current.x+1,current.y)){
         current.x++; ghostY=calcGhost();
-        if(locking) lockTimer=0;
+        if(locking && lockMoves<15){ lockTimer=0; lockMoves++; }
         sfxMove();
       }
       break;
@@ -975,12 +982,12 @@ document.addEventListener('keydown', e=>{
     case 'x': case 'X':
       e.preventDefault();
       { const r=tryRotate(current,1);
-        if(r){ current=r; ghostY=calcGhost(); if(locking)lockTimer=0; sfxRotate(); } }
+        if(r){ current=r; ghostY=calcGhost(); if(locking && lockMoves<15){ lockTimer=0; lockMoves++; } sfxRotate(); } }
       break;
     case 'z': case 'Z':
       e.preventDefault();
       { const r=tryRotate(current,-1);
-        if(r){ current=r; ghostY=calcGhost(); if(locking)lockTimer=0; sfxRotate(); } }
+        if(r){ current=r; ghostY=calcGhost(); if(locking && lockMoves<15){ lockTimer=0; lockMoves++; } sfxRotate(); } }
       break;
     case ' ':
       e.preventDefault(); hardDrop(); break;
@@ -1054,42 +1061,64 @@ btnMute.addEventListener('click', ()=>{
 })();
 
 // ─── Auth check + user display + per-account highscore ────────────────────────
-(function() {
-  const user = localStorage.getItem('blokfall_user');
+let _sessionToken = null;
+
+(async function() {
+  const token = localStorage.getItem('blokfall_token');
   const usernameEl = document.getElementById('game-username');
   const logoutBtn  = document.getElementById('btn-logout');
 
-  if (!user) {
+  async function logout() {
+    localStorage.removeItem('blokfall_token');
+    localStorage.removeItem('blokfall_user');
+    window.location.href = 'index.html';
+  }
+
+  if (!token) {
     window.location.href = 'index.html';
     return;
   }
 
-  let username = user;
   try {
-    const parsed = JSON.parse(user);
-    username = parsed.username || user;
-  } catch(_) {}
+    const res = await fetch('/api/me', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    if (!res.ok) { logout(); return; }
+    const data = await res.json();
+    const username = data.username;
 
-  if (usernameEl) usernameEl.textContent = username;
+    _sessionToken = token;
+    localStorage.setItem('blokfall_user', JSON.stringify({ username }));
 
-  // Load this account's highscore
-  _highscoreKey = 'blokfall_best_' + username;
-  const saved = parseInt(localStorage.getItem(_highscoreKey), 10) || 0;
-  highscore = saved;
-  if (highEl) highEl.textContent = highscore;
+    if (usernameEl) usernameEl.textContent = username;
+
+    const scoreRes = await fetch('/api/score', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    if (scoreRes.ok) {
+      const scoreData = await scoreRes.json();
+      highscore = scoreData.best || 0;
+      if (highEl) highEl.textContent = highscore;
+    }
+  } catch {
+    const cached = localStorage.getItem('blokfall_user');
+    if (!cached) { window.location.href = 'index.html'; return; }
+    try {
+      const u = JSON.parse(cached);
+      if (usernameEl) usernameEl.textContent = u.username || '';
+    } catch(_) {}
+    _sessionToken = token;
+  }
 
   if (logoutBtn) {
-    logoutBtn.addEventListener('click', () => {
-      localStorage.removeItem('blokfall_user');
-      window.location.href = 'index.html';
-    });
+    logoutBtn.addEventListener('click', logout);
   }
 })();
 
 // ─── Boot ─────────────────────────────────────────────────────────────────────
 function boot() {
   init();
-  showOverlay('BLOKFALL', '', 'OR PRESS ANY KEY');
+  showOverlay('BLOKFALL', '', window.i18n ? window.i18n.t('ov_any_key') : 'OR PRESS ANY KEY');
   requestAnimationFrame(ts=>{ lastTime=ts; gameLoop(ts); });
 }
 if (document.readyState==='loading') {
