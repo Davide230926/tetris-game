@@ -432,7 +432,7 @@ function updateHUD() {
       }).catch(()=>{});
     }
   }
-  highEl.textContent=highscore;
+  highEl.textContent=Math.max(highscore, score);
   levelEl.textContent=level;
   linesEl.textContent=lines;
 }
