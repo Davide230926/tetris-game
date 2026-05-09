@@ -828,7 +828,7 @@ function moveDown(isSoftDrop) {
     if (!locking) { locking=true; lockTimer=0; lockMoves=0; }
   } else {
     current.y++;
-    if (isSoftDrop) { score+=1; scoreEl.textContent=score; }
+    if (isSoftDrop) { score+=1; updateHUD(); }
     locking=false; lockTimer=0; lockMoves=0;
     ghostY=calcGhost();
   }
@@ -838,7 +838,7 @@ function hardDrop() {
   const dist=ghostY-current.y;
   current.y=ghostY;
   score+=dist*2;
-  scoreEl.textContent=score;
+  updateHUD();
   sfxDrop();
   spawnParticles(current.x*CELL+CELL/2, current.y*CELL+CELL/2, current.color, 12);
   lockPiece();
